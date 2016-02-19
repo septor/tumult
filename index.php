@@ -7,6 +7,6 @@
 include('libs/Parsedown.php');
 include('libs/statics.php');
 
-$content = new Statics();
+$cp = new Statics();
 
-echo $content->getContent('statics/about.md');
+echo $cp->content('statics/about.md');

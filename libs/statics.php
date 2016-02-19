@@ -12,13 +12,13 @@ class Statics
 		$this->mdp = new Parsedown();
 	}
 
-	function getContent($file)
+	function content($file)
 	{
 		if(file_exists($file))
 			return $this->mdp->text(file_get_contents($file));
 	}
-	
-	function getPost($file)
+
+	function post($file)
 	{
 	}
 }
