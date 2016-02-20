@@ -4,7 +4,7 @@
  * THIS FILE IS CURRENTLY FOR TESTING AND WILL CHANGE DRASTICALLY
  *
  */
-include('libs/Parsedown.php');
+include('libs/thirdparty/Parsedown.php');
 include('libs/statics.php');
 
 $cp = new Statics();
