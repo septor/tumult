@@ -14,5 +14,10 @@ class Theme
 
 	function parseSc($input)
 	{
+		// There's probably a better way. Researching...
+		preg_match_all('/{(.*?)}/', $input, $matches);
+
+
+		print_r(array_map('intval',$matches[1]));
 	}
 }

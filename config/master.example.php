@@ -15,3 +15,9 @@ $config = [
 		'' => '',
 	],
 ];
+
+$columnOrders = [
+	'blog' => 'desc',
+	'services' => '',
+	'statics' => 'intro,about',
+],

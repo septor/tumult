@@ -3,13 +3,19 @@
  * Tumult; get more information at:  http://tumultget.xyz/
  * For contributions, copyrights, and more view the `docs` folder.
  */
-$themeinfo = [
+$THEMEINFO = [
 	'name' => 'default',
 	'author' => 'septor',
 ];
 
-function blockStyle($title, $content)
-{
-	return '<h2>'.$title.'</h2>
-			<p>'.$content.'</p>';
-}
+$BLOGSTYLE = '
+	<h2>{TITLE}</h2>
+	<p>{CONTENT}';
+
+$STATICSTYLE = '
+	<h2>{TITLE}</h2>
+	<p>{CONTENT}';
+
+$SERVICESTYLE = '
+	<h2>{TITLE}</h2>
+	<p>{CONTENT}';
