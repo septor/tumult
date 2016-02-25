@@ -14,6 +14,7 @@ $te = new Theme(TUMULT_THEME);
 echo '<html>
 	<head>
 		<title>'.TUMULT_NAME.'title>
+		<link rel="stylesheet" href="themes/'.TUMULT_THEME.'/style.css">
 	</head>
 	<body>';
 
