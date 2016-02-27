@@ -12,12 +12,26 @@ class Theme
 		$this->theme = $name;
 	}
 
-	function parseSc($input)
+	function displayContent()
 	{
-		// There's probably a better way. Researching...
-		preg_match_all('/{(.*?)}/', $input, $matches);
+		$input = file_get_contents('themes/'.$this->theme.'/template.html');
+		$output = str_replace(
+			[
+				'{SITENAME}',
+				'{BLOG_COLUMN}',
+				'{SERVICES_COLUMN}',
+				'{STATICS_COLUMN}',
+				'{COPYRIGHT}',
+			],
+			[
+				TUMULT_SITENAME,
+				'BLOG COLUMN',
+				'SERVICES COLUMN',
+				'STATICS COLUMN',
+				'Copyright '.date('Y').' '.TUMULT_SITEOWNER,
+			],
+		$input);
 
-
-		print_r(array_map('intval',$matches[1]));
+		return $output;
 	}
 }

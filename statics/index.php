@@ -15,11 +15,13 @@ $te = new Theme(TUMULT_THEME);
 echo '<html>
 	<head>
 		<title>'.TUMULT_SITENAME.'</title>
-		<link rel="stylesheet" href="themes/'.TUMULT_THEME.'/style.css">
 	</head>
 	<body>';
-echo $te->displayContent();
+//include('themes/'.TUMULT_THEME.'/template.html');
+$te->parseSc();
 
 echo '
 	</body>
 </html>';
+
+//echo $cp->content('statics/about.md');
