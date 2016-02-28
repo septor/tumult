@@ -6,15 +6,17 @@
 class Theme
 {
 	public $theme;
+	public $staticOrder;
 
 	function __construct($name='default')
 	{
 		$this->theme = $name;
+		$this->staticOrder = ['intro', 'about'];
+		$this->mdp = new Parsedown();
 	}
 
 	function displayContent()
 	{
-		$input = file_get_contents('themes/'.$this->theme.'/template.html');
 		$output = str_replace(
 			[
 				'{SITENAME}',
@@ -27,11 +29,23 @@ class Theme
 				TUMULT_SITENAME,
 				'BLOG COLUMN',
 				'SERVICES COLUMN',
-				'STATICS COLUMN',
+				$this->fetchStatics(),
 				'Copyright '.date('Y').' '.TUMULT_SITEOWNER,
 			],
-		$input);
+			file_get_contents('themes/'.$this->theme.'/template.html'));
 
 		return $output;
 	}
+
+	function fetchStatics()
+	{
+		$statics = "";
+		foreach($this->staticOrder as $static)
+		{
+			$statics .= $this->mdp->text(file_get_contents('statics/'.$static.'.md'));
+		}
+
+		return $statics;
+	}
 }
+
