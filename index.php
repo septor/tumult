@@ -10,7 +10,7 @@ if(!file_exists('config/master.php'))
 include('config/master.php');
 include('_libs.php');
 $cp = new Statics();
-$te = new Theme(TUMULT_THEME);
+$te = new Theme(TUMULT_THEME, $columnOrders);
 
 echo '<html>
 	<head>

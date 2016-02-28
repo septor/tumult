@@ -8,10 +8,10 @@ class Theme
 	public $theme;
 	public $staticOrder;
 
-	function __construct($name='default')
+	function __construct($name='default', $orders)
 	{
 		$this->theme = $name;
-		$this->staticOrder = ['intro', 'about']
+		$this->staticOrder = explode(',', $orders['statics']);
 		$this->mdp = new Parsedown();
 	}
 
