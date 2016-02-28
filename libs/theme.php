@@ -11,7 +11,7 @@ class Theme
 	function __construct($name='default')
 	{
 		$this->theme = $name;
-		$this->staticOrder = ['intro', 'about'];
+		$this->staticOrder = ['intro', 'about']
 		$this->mdp = new Parsedown();
 	}
 
@@ -48,4 +48,3 @@ class Theme
 		return $statics;
 	}
 }
-
