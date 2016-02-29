@@ -12,7 +12,7 @@ class Theme
 	{
 		$this->theme = $name;
 		$this->staticOrder = explode(',', $orders['statics']);
-		$this->mdp = new Parsedown();
+		$this->sp = new Statics();
 	}
 
 	function displayContent()
@@ -27,7 +27,7 @@ class Theme
 			],
 			[
 				TUMULT_SITENAME,
-				'BLOG COLUMN',
+				'BLOG_COLUMN',
 				'SERVICES COLUMN',
 				$this->fetchStatics(),
 				'Copyright '.date('Y').' '.TUMULT_SITEOWNER,
@@ -42,7 +42,7 @@ class Theme
 		$statics = "";
 		foreach($this->staticOrder as $static)
 		{
-			$statics .= $this->mdp->text(file_get_contents('statics/'.$static.'.md'));
+			$statics .= $this->sp->content('statics/'.$static.'.md');
 		}
 
 		return $statics;
