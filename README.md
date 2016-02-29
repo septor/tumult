@@ -1,4 +1,4 @@
-**Warning: This project is a WIP, but is under active development. Things are added as they are ready for testing. The below text is all based on the end product and could change over the course of this projects development. Stay tuned and keep up to date with things by starring this repo, or bookmarking it and checking back!**
+**WARNING: This project is in extreme alpha! It is in active development, but progress is slow going with the limited time I can work on things. You should note: directory structure, file structure, file naming, and tons of other things may change drastically over the course of the alpha. If you wish to follow along and contribute (as of this writing some of the most basic functionality is working) you are welcome to do so, but if you submit an issue _please_ add the date to your post or issue title so I can reference the files you were using!**
 
 # [Tumult](#)
 
