@@ -4,9 +4,6 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	color: #666;
 }
-
-/* STRUCTURE */
-
 #wrapper {
 	padding: 5px;
 	width: 960px;
@@ -23,7 +20,7 @@ header {
 }
 
 #middle {
-	width: 294px; /* Account for margins + border values */
+	width: 294px;
 	float: left;
 	padding: 5px 15px;
 	margin: 0px 5px 5px 5px;
@@ -39,10 +36,6 @@ footer {
 	padding: 0 15px;
 }
 
-/************************************************************************************
-MEDIA QUERIES
- *************************************************************************************/
-/* for 980px or less */
 @media screen and (max-width: 980px) {
 
 	#wrapper {
@@ -58,43 +51,34 @@ MEDIA QUERIES
 		margin: 0px 0px 5px 5px;
 		float: right;
 	}
-
 	#sidebar {
 		clear: both;
 		padding: 1% 4%;
 		width: auto;
 		float: none;
 	}
-
 	header, footer {
 		padding: 1% 4%;
 	}
 }
 
-/* for 700px or less */
 @media screen and (max-width: 600px) {
-
 	#content {
 		width: auto;
 		float: none;
 	}
-
 	#middle {
 		width: auto;
 		float: none;
 		margin-left: 0px;
 	}
-
 	#sidebar {
 		width: auto;
 		float: none;
 	}
-
 }
 
-/* for 480px or less */
 @media screen and (max-width: 480px) {
-
 	header {
 		height: auto;
 	}
@@ -104,9 +88,7 @@ MEDIA QUERIES
 	#sidebar {
 		display: none;
 	}
-
 }
-
 
 #content {
 	background: #f8f8f8;
@@ -118,6 +100,6 @@ header, #content, #middle, #sidebar {
 	margin-bottom: 5px;
 }
 
-#wrapper, header, #content, #middle, #sidebar, footer {
+header, #content, #middle, #sidebar, footer {
 	border: solid 1px #ccc;
 }
