@@ -2,6 +2,8 @@
 
 # [Tumult](#)
 
+[![Gitter](https://badges.gitter.im/septor/tumult.svg)](https://gitter.im/septor/tumult?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 Tumult is a content aggregator used to publish data from several locations onto one single page for easy viewing. It's written in PHP and utilizes Markdown to serve up static content such as blog posts, **About Me** blurbs, and anything else that isn't parsed in using one of several included Services.
 
 ## Services
