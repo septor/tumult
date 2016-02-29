@@ -9,8 +9,14 @@ if(!file_exists('config/master.php'))
 }
 include('config/master.php');
 include('_libs.php');
+
+if(is_defined(TUMULT_THEME))
+	$theme = (file_exists('themes/'.TUMULT_THEME) ? TUMULT_THEME : 'default');
+else
+	$theme = 'default';
+	
 $cp = new Statics();
-$te = new Theme(TUMULT_THEME, $columnOrders);
+$te = new Theme($theme, $columnOrders);
 
 echo '<html>
 	<head>
