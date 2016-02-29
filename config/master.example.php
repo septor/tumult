@@ -17,8 +17,6 @@ define('TUMULT_THEME',		'default');
 // Use `githubusername/reponame` to use a Github repo (see the wiki for more info)
 define('TUMULT_BLOGFEED',	'_posts');
 
-
-
 $columnOrders = [
 	'blog' => 'desc',
 	'services' => '',
