@@ -62,7 +62,7 @@ class Statics
 				$posts .= $newPost['content'];
 			}
 		}
-		//TODO: fetch remote repo posts
+		//TODO: Fetch remote blog posts
 
 		return $posts;
 	}

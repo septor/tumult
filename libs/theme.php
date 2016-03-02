@@ -25,7 +25,7 @@ class Theme
 			],
 			[
 				TUMULT_SITENAME,
-				$this->sp->fetchPosts('_posts'),
+				$this->sp->fetchPosts(TUMULT_POSTLOCATION),
 				'SERVICES COLUMN',
 				$this->sp->fetchStatics(),
 				'Copyright '.date('Y').' '.TUMULT_SITEOWNER,
