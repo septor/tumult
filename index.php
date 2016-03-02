@@ -15,8 +15,7 @@ if(defined(TUMULT_THEME))
 else
 	$theme = 'default';
 
-$cp = new Statics();
-$te = new Theme($theme, $columnOrders);
+$te = new Theme($theme);
 
 echo '<html>
 	<head>

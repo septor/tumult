@@ -22,27 +22,48 @@ class Statics
 	{
 		if(file_exists($file))
 		{
-			// Read the file into an array.
 			$lines = file($file);
-
-			// Split off the first 4 lines and assign them as our post config.
 			$content = array_splice($lines, 4);
 			$configLines = $lines;
 
-			// Now cycle through the remaining lines and parse them.
-			$post = '';
+			$post ='';
 			foreach($content as $line)
 				$post .= $this->mdp->text($line);
 
-			// Assign the array parts, then return it.
-			// TODO: More effecient title/desc plucking.
+			//TODO: Better config plucking
 			$output = [
 				'title' => str_replace('title=', '', $configLines[1]),
 				'description' => str_replace('description=', '', $configLines[2]),
 				'content' => $post,
 			];
 
-			return $output;
+		return $output;
 		}
+	}
+
+	function fetchStatics()
+	{
+		$statics = '';
+		foreach(glob('statics/*.md') as $static)
+			$statics .= $this->content($static);
+
+		return $statics;
+	}
+
+	function fetchPosts($location)
+	{
+		$posts = '';
+
+		if($location == '_posts')
+		{
+			foreach(glob($location.'/*.md') as $post)
+			{
+				$newPost = $this->post($post);
+				$posts .= $newPost['content'];
+			}
+		}
+		//TODO: fetch remote repo posts
+
+		return $posts;
 	}
 }

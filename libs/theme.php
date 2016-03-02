@@ -6,12 +6,10 @@
 class Theme
 {
 	public $theme;
-	public $staticOrder;
 
-	function __construct($name='default', $orders)
+	function __construct($name='default')
 	{
 		$this->theme = $name;
-		$this->staticOrder = explode(',', $orders['statics']);
 		$this->sp = new Statics();
 	}
 
@@ -27,24 +25,13 @@ class Theme
 			],
 			[
 				TUMULT_SITENAME,
-				'BLOG_COLUMN',
+				$this->sp->fetchPosts('_posts'),
 				'SERVICES COLUMN',
-				$this->fetchStatics(),
+				$this->sp->fetchStatics(),
 				'Copyright '.date('Y').' '.TUMULT_SITEOWNER,
 			],
 			file_get_contents('themes/'.$this->theme.'/template.html'));
 
 		return $output;
-	}
-
-	function fetchStatics()
-	{
-		$statics = "";
-		foreach($this->staticOrder as $static)
-		{
-			$statics .= $this->sp->content('statics/'.$static.'.md');
-		}
-
-		return $statics;
 	}
 }
