@@ -6,4 +6,5 @@
 include('libs/thirdparty/Parsedown.php');
 include('config/master.php');
 include('libs/statics.php');
+include('libs/posts.php');
 include('libs/theme.php');

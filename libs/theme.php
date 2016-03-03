@@ -11,10 +11,16 @@ class Theme
 	{
 		$this->theme = $name;
 		$this->sp = new Statics();
+		$this->bp = new Posts();
 	}
 
 	function displayContent()
 	{
+		if(TUMULT_POSTLOCATION == '_posts')
+			$posts = $this->bp->fetchLocal();
+		else
+			$posts = $this->bp->fetchRemote();
+
 		$output = str_replace(
 			[
 				'{SITENAME}',
@@ -25,9 +31,9 @@ class Theme
 			],
 			[
 				TUMULT_SITENAME,
-				$this->sp->fetchPosts(TUMULT_POSTLOCATION),
+				$posts,
 				'SERVICES COLUMN',
-				$this->sp->fetchStatics(),
+				$this->sp->fetch(TUMULT_STATICS_SORT),
 				'Copyright '.date('Y').' '.TUMULT_SITEOWNER,
 			],
 			file_get_contents('themes/'.$this->theme.'/template.html'));

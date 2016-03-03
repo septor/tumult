@@ -7,15 +7,3 @@ $THEMEINFO = [
 	'name' => 'default',
 	'author' => 'septor',
 ];
-
-$BLOGSTYLE = '
-	<h2>{TITLE}</h2>
-	<p>{CONTENT}';
-
-$STATICSTYLE = '
-	<h2>{TITLE}</h2>
-	<p>{CONTENT}';
-
-$SERVICESTYLE = '
-	<h2>{TITLE}</h2>
-	<p>{CONTENT}';

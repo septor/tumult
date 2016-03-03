@@ -18,52 +18,19 @@ class Statics
 			return $this->mdp->text(file_get_contents($file));
 	}
 
-	function post($file)
-	{
-		if(file_exists($file))
-		{
-			$lines = file($file);
-			$content = array_splice($lines, 4);
-			$configLines = $lines;
-
-			$post ='';
-			foreach($content as $line)
-				$post .= $this->mdp->text($line);
-
-			//TODO: Better config plucking
-			$output = [
-				'title' => str_replace('title=', '', $configLines[1]),
-				'description' => str_replace('description=', '', $configLines[2]),
-				'content' => $post,
-			];
-
-		return $output;
-		}
-	}
-
-	function fetchStatics()
+	function fetch($sort)
 	{
 		$statics = '';
-		foreach(glob('statics/*.md') as $static)
+		$files = glob('statics/*.md');
+		if($sort == 'asc')
+			asort($files);
+		else if($sort == 'desc')
+			arsort($files);
+
+		foreach($files as $static)
 			$statics .= $this->content($static);
 
+
 		return $statics;
-	}
-
-	function fetchPosts($location)
-	{
-		$posts = '';
-
-		if($location == '_posts')
-		{
-			foreach(glob($location.'/*.md') as $post)
-			{
-				$newPost = $this->post($post);
-				$posts .= $newPost['content'];
-			}
-		}
-		//TODO: Fetch remote blog posts
-
-		return $posts;
 	}
 }
