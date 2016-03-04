@@ -9,13 +9,13 @@ class Services
 	{
 	}
 
-	function loadConfig($service)
+	function hasConfig($service)
 	{
 		if(file_exists('config/'.$service.'.php')
-			$output = 'config/'.$service.'.php';
+			$output = true;
 		else
-			$output = 'services/'.$service.'/config.php';
+			$output = false;
 
 		return $output;
 	}
-}	
+}
