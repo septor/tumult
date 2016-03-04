@@ -1,5 +1,7 @@
 **WARNING: This project is in extreme alpha! It is in active development, but progress is slow going with the limited time I can work on things. You should note: directory structure, file structure, file naming, and tons of other things may change drastically over the course of the alpha. If you wish to follow along and contribute (as of this writing some of the most basic functionality is working) you are welcome to do so, but if you submit an issue _please_ add the date to your post or issue title so I can reference the files you were using!**
 
+**Update March 4th**: Blog posts, static pages, and theme support are all implemented. They may change slightly but the overall functionality of these things is good to go. Feel free to test them. The next major step is implementing third-party services and getting them to display. I'm going to start with Twitter and get that running and then branch out into other things. If you'd like to request a service open an issue!
+
 # [Tumult](#)
 
 [![Gitter](https://badges.gitter.im/septor/tumult.svg)](https://gitter.im/septor/tumult?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
