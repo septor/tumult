@@ -22,7 +22,7 @@ define('STATIC_STYLE', '
 
 define('TWITTER_STYLE', '
 	<div>
-		@{USER_URL}<br />
+		@{USERNAME}<br />
 		{TWEETS}
 	</div>
 ');

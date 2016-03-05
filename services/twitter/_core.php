@@ -49,4 +49,67 @@ class Twitter extends Services
 
 		return $output;
 	}
+
+	function display()
+	{
+		$sid = array();
+		$data = $this->gatherTweets();
+		$user = '<a href="http://twitter.com/'.$data[0]->user->name.'">'.$data[0]->user->name.'</a>';
+
+		if($this->replies)
+		{
+			$a = 0;
+			foreach($tweets as $status)
+			{
+				$a++;
+				if(empty($status->in_reply_to_user_id))
+					array_push($sid, ($a-1));
+			}
+		}
+		else
+		{
+			for($i = 0; $ <= ($this->tweets - 1); $i++)
+				array_push($sid, $i);
+		}
+
+		$b = 1;
+		foreach($sid as $id)
+		{
+			if($b <= $this->tweets)
+			{
+				$all_tweets .= str_replace(
+					[
+						'{USERNAME}',
+						'{DATESTAMP}',
+						'{STATUS}',
+						'{RETWEET}',
+						'{REPLY}',
+						'{FAVORITE}',
+					],
+					[
+						$user,
+						$data[$id]->created_at,
+						$data[$id]->text,
+						'retweet',
+						'reply',
+						'favorite',
+					],
+					TWITTER_TWEET_STYLE);
+			}
+			$b++;
+		}
+
+		$output = str_replace
+			[
+				'{USERNAME}',
+				'{TWEETS}',
+			],
+			[
+				$user,
+				$all_tweets,
+			],
+			TWITTER_STYLE);
+
+		return $output;
+	}
 }
