@@ -10,6 +10,7 @@ class Posts
 	function __construct()
 	{
 		$this->mdp = new Parsedown();
+		$this->blockstyle = POST_STYLE;
 	}
 
 	function process($file)
@@ -40,7 +41,18 @@ class Posts
 		foreach(glob(TUMULT_POSTLOCATION.'/*.md') as $post)
 		{
 			$newPost = $this->process($post);
-			$posts .= $newPost['content'];
+			$posts .= str_replace(
+				[
+					'{TITLE}',
+					'{DESCRIPTION}',
+					'{CONTENT}',
+				],
+				[
+					$newPost['title'],
+					$newPost['description'],
+					$newPost['content'],
+				],
+				$this->blockstyle);
 		}
 
 		return $posts;
@@ -60,7 +72,18 @@ class Posts
 		foreach($data as $post)
 		{
 			$newPost = $this->process($post->download_url);
-			$posts .= $newPost['content'];
+			$posts .= str_replace(
+				[
+					'{TITLE}',
+					'{DESCRIPTION}',
+					'{CONTENT}',
+				],
+				[
+					$newPost['title'],
+					$newPost['description'],
+					$newPost['content'],
+				],
+				$this->blockstyle);
 		}
 
 		return $posts;
