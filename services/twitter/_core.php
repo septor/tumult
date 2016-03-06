@@ -6,10 +6,11 @@
 require_once('keys.php');
 require_once('TwitterAPIExchange.php');
 
-class Twitter extends Services
+class Twitter
 {
 	function __construct()
 	{
+		$this->sd = new Services();
 		$this->settings = [
 			'oauth_access_token' => TWITTER_ACCESS_TOKEN,
 			'oauth_access_token_secret' => TWITTER_ACCESS_SECRET,
@@ -17,12 +18,13 @@ class Twitter extends Services
 			'consumer_secret' => TWITTER_CONSUMER_SECRET,
 		];
 
-		if(parent::hasConfig('twitter'))
+		if($this->sd->hasConfig('twitter'))
 		{
 			$this->tweets = TWITTER_TWEETS;
 			$this->replies = TWITTER_REPLIES;
 			$this->retweets = TWITTER_RETWEETS;
 			$this->cache = TWITTER_CACHE * 60;
+			$this->dateformat = TWITTER_DATEFORMAT;
 		}
 		else
 		{
@@ -30,8 +32,10 @@ class Twitter extends Services
 			$this->replies = true;
 			$this->retweets = false;
 			$this->cache = 3600;
+			$this->dateformat = 'F jS, Y - g:i A';
 		}
 
+		$this->username = TUMULT_SOCIALDRINKS['twitter'];
 		$this->twitter = new TwitterAPIExchange($this->settings);
 	}
 
@@ -50,16 +54,27 @@ class Twitter extends Services
 		return $output;
 	}
 
+	function parseTweet($tweet)
+	{
+		$tweet = strip_tags($tweet);
+		$tweet = preg_replace("/(https?:\/\/[^\s\)]+)/", "<a href='\\1'>\\1</a>", $tweet);
+		$tweet = preg_replace("/\#([^\s\ \:\.\;\-\,\!\)\(\"]+)/", "<a href='http://search.twitter.com/search?q=%23\\1'>#\\1</a>", $tweet);
+		$tweet = preg_replace("/\@([^\s\ \:\.\;\-\,\!\)\(\"]+)/", "<a href='http://twitter.com/\\1'>@\\1</a>", $tweet);
+
+		return $tweet;
+	}
+
+
 	function display()
 	{
 		$sid = array();
 		$data = $this->gatherTweets();
-		$user = '<a href="http://twitter.com/'.$data[0]->user->name.'">'.$data[0]->user->name.'</a>';
+		$user = '<a href="http://twitter.com/'.$this->username.'">'.$this->username.'</a>';
 
 		if($this->replies)
 		{
 			$a = 0;
-			foreach($tweets as $status)
+			foreach($data as $status)
 			{
 				$a++;
 				if(empty($status->in_reply_to_user_id))
@@ -68,15 +83,17 @@ class Twitter extends Services
 		}
 		else
 		{
-			for($i = 0; $ <= ($this->tweets - 1); $i++)
+			for($i = 0; $i <= ($this->tweets - 1); $i++)
 				array_push($sid, $i);
 		}
 
 		$b = 1;
+		$all_tweets = '';
 		foreach($sid as $id)
 		{
 			if($b <= $this->tweets)
 			{
+				$tweetDate = new DateTime($data[$id]->created_at);
 				$all_tweets .= str_replace(
 					[
 						'{USERNAME}',
@@ -88,8 +105,8 @@ class Twitter extends Services
 					],
 					[
 						$user,
-						$data[$id]->created_at,
-						$data[$id]->text,
+						$tweetDate->format($this->dateformat),
+						$this->parseTweet($data[$id]->text),
 						'retweet',
 						'reply',
 						'favorite',
@@ -99,7 +116,7 @@ class Twitter extends Services
 			$b++;
 		}
 
-		$output = str_replace
+		$output = str_replace(
 			[
 				'{USERNAME}',
 				'{TWEETS}',

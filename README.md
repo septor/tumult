@@ -1,5 +1,7 @@
 **WARNING: This project is in extreme alpha! It is in active development, but progress is slow going with the limited time I can work on things. You should note: directory structure, file structure, file naming, and tons of other things may change drastically over the course of the alpha. If you wish to follow along and contribute (as of this writing some of the most basic functionality is working) you are welcome to do so, but if you submit an issue _please_ add the date to your post or issue title so I can reference the files you were using!**
 
+**Update March 6th**: Basic services support added with Twitter. With this, I am prepared to display my [testing page](http://septor.us/tumult). After some optimizations I'll be releasing alpha1 for testing.
+
 **Update March 4th**: Blog posts, static pages, and theme support are all implemented. They may change slightly but the overall functionality of these things is good to go. Feel free to test them. The next major step is implementing third-party services and getting them to display. I'm going to start with Twitter and get that running and then branch out into other things. If you'd like to request a service open an issue!
 
 # [Tumult](#)
@@ -18,7 +20,11 @@ Services are simple to use and set up. In most cases you just need to upload the
 
 While Tumult is in a very early stage and these may change, here are the minimum requirements needed in order for it to run:
 
-* PHP 5.4+
+* PHP 5.6+
+
+**Why 5.6+?** -- In the beginning I was shooting for 5.4+ becuase I was using short arrays `$names = ['tim', 'bob'];` instead of the longer format `$names = array('time', 'bob');` and this is only supported in 5.4+. To make specifying your social usernames easier I want to use an array in a constant. You can do that in `define()` but that requires PHP7+, so, I'm using a different approach.
+
+Please note, as stated above, this is still early in the development so I may throw this last idea out and drop the minimum back down to 5.4+.
 
 ### Optional Requirements
 

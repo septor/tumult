@@ -8,6 +8,14 @@
 define('TUMULT_SITENAME',		'Tumult');
 define('TUMULT_SITEOWNER',		'septor');
 
+// Socal Network usernames.
+// Note: define() is not used here because that requires PHP7+.
+// The below method only requires PHP5.6+ 
+const TUMULT_SOCIALDRINKS = [
+	'twitter' => 'septor',
+	'github' => 'septor',
+];
+
 // Theme you wish to use.
 // Defaults to 'default' if your theme isn't found or this isn't configured.
 define('TUMULT_THEME',			'default');

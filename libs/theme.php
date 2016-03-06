@@ -12,6 +12,8 @@ class Theme
 		$this->theme = $name;
 		$this->sp = new Statics();
 		$this->bp = new Posts();
+		$this->sd = new Services();
+		$this->twitter = new Twitter();
 	}
 
 	function displayContent()
@@ -20,6 +22,15 @@ class Theme
 			$posts = $this->bp->fetchLocal();
 		else
 			$posts = $this->bp->fetchRemote();
+
+		$services = glob('services/*', GLOB_ONLYDIR);
+		$loadServices = '';
+
+		foreach($services as $service)
+		{
+			$service = str_replace('services/', '', $service);
+			$loadServices .= $this->sd->loadService($service);
+		}
 
 		$output = str_replace(
 			[
@@ -32,7 +43,7 @@ class Theme
 			[
 				TUMULT_SITENAME,
 				$posts,
-				'SERVICES COLUMN',
+				$loadServices,
 				$this->sp->fetch(TUMULT_STATICS_SORT),
 				'Copyright '.date('Y').' '.TUMULT_SITEOWNER,
 			],

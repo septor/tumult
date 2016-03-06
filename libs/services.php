@@ -11,11 +11,23 @@ class Services
 
 	function hasConfig($service)
 	{
-		if(file_exists('config/'.$service.'.php')
+		if(file_exists('config/'.$service.'.php'))
 			$output = true;
 		else
 			$output = false;
 
 		return $output;
+	}
+
+	function loadService($service)
+	{
+		switch($service)
+		{
+			case 'twitter':
+				$load = new Twitter();
+				return $load->display();
+				break;
+		}
+
 	}
 }
