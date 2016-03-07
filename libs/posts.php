@@ -53,7 +53,7 @@ class Posts
 	{
 		$posts = '';
 
-		foreach(glob(TUMULT_POSTLOCATION.'/*.md') as $post)
+		foreach(glob(TUMULT_POSTLOCATION.'/*.{markdown,mdown,mkdn,mkd,md}', GLOB_BRACE) as $post)
 		{
 			$newPost = $this->process($post);
 			$posts .= str_replace(

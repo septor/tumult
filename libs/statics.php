@@ -21,7 +21,7 @@ class Statics
 	function fetch($sort)
 	{
 		$statics = '';
-		$files = glob('statics/*.md');
+		$files = glob('statics/*.{markdown,mdown,mkdn,mkd,md}', GLOB_BRACE);
 		if($sort == 'asc')
 			asort($files);
 		else if($sort == 'desc')
