@@ -10,7 +10,6 @@ class Statics
 	function __construct()
 	{
 		$this->mdp = new Parsedown();
-		$this->blockstyle = STATIC_STYLE;
 	}
 
 	function content($file)
@@ -29,7 +28,7 @@ class Statics
 			arsort($files);
 
 		foreach($files as $static)
-			$statics .= str_replace('{CONTENT}', $this->content($static), $this->blockstyle);
+			$statics .= str_replace('{CONTENT}', $this->content($static), STATIC_STYLE);
 
 		return $statics;
 	}
