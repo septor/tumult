@@ -10,28 +10,43 @@ class Posts
 	function __construct()
 	{
 		$this->mdp = new Parsedown();
-		$this->blockstyle = POST_STYLE;
 	}
 
 	function process($file)
 	{
 		$lines = file($file);
 
-		$content = array_splice($lines, 4);
+		$content = array_splice($lines, 6);
 		$configLines = $lines;
 
 		$post = '';
 		foreach($content as $line)
 			$post .= $this->mdp->text($line);
 
-		//TODO: Better config plucking
 		$output = [
-			'title' => str_replace('title=', '', $configLines[1]),
-			'description' => str_replace('description=', '', $configLines[2]),
+			'title' => $this->gatherConfig($configLines[2]),
+			'description' => $this->gatherConfig($configLines[3]),
 			'content' => $post,
+			'date' => $this->getPostDate($file),
 		];
 
 		return $output;
+	}
+
+	function gatherConfig($config)
+	{
+		if(preg_match('/"([^"]+)"/', $config, $matches))
+			return $matches[1];
+		else
+			return '';
+	}
+
+	function getPostDate($filename)
+	{
+		$tmp = explode('_', $filename);
+		$date = explode('-', $tmp[0]);
+
+		return strtotime($date[1].'/'.$date[2].'/'.$date[0]);
 	}
 
 	function fetchLocal()
@@ -46,13 +61,15 @@ class Posts
 					'{TITLE}',
 					'{DESCRIPTION}',
 					'{CONTENT}',
+					'{DATE}',
 				],
 				[
 					$newPost['title'],
 					$newPost['description'],
 					$newPost['content'],
+					date(TUMULT_POST_DATEFORMAT, $newPost['date']),
 				],
-				$this->blockstyle);
+				POST_STYLE);
 		}
 
 		return $posts;
@@ -77,13 +94,15 @@ class Posts
 					'{TITLE}',
 					'{DESCRIPTION}',
 					'{CONTENT}',
+					'{DATE}',
 				],
 				[
 					$newPost['title'],
 					$newPost['description'],
 					$newPost['content'],
+					date(TUMULT_POST_DATEFORMAT, $newPost['date']),
 				],
-				$this->blockstyle);
+				POST_STYLE);
 		}
 
 		return $posts;

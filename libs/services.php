@@ -5,10 +5,6 @@
  */
 class Services
 {
-	function __construct()
-	{
-	}
-
 	function hasConfig($service)
 	{
 		if(file_exists('config/'.$service.'.php'))
@@ -28,6 +24,5 @@ class Services
 				return $load->display();
 				break;
 		}
-
 	}
 }

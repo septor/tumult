@@ -29,3 +29,8 @@ define('TUMULT_STATICS_SORT',	'asc');
 // Use `_posts` to use posts stored along side this script.
 // Use `githubusername/reponame` to use a Github repo (see the wiki for more info)
 define('TUMULT_POSTLOCATION',	'_posts');
+
+// Date format to display the date of blog posts.
+// Format accepts parameters used in the PHP date() function.
+// See http://php.net/manual/en/function.date.php for more information.
+define('TUMULT_POST_DATEFORMAT', 'F jS, Y');

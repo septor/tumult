@@ -1,6 +1,8 @@
 ---
-title=Example Post for Tumult
-description=An example post to show how local blog posts work
+
+title = "Example Post for Tumult"
+description = "An example post to show how local blog posts work"
+
 ---
 
 # Example Tumult Post

@@ -13,7 +13,6 @@ class Theme
 		$this->sp = new Statics();
 		$this->bp = new Posts();
 		$this->sd = new Services();
-		$this->twitter = new Twitter();
 	}
 
 	function displayContent()

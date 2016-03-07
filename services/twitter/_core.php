@@ -107,9 +107,9 @@ class Twitter
 						$user,
 						$tweetDate->format($this->dateformat),
 						$this->parseTweet($data[$id]->text),
-						'retweet',
-						'reply',
-						'favorite',
+						'<a href="javascript:;" onClick="window.open(\'https://twitter.com/intent/retweet?tweet_id='.$data[$id]->id.'\',\'retweet\',\'scrollbars=yes,width=600,height=375\');">Retweet</a>',
+						'<a href="javascript:;" onClick="window.open(\'https://twitter.com/intent/tweet?in_reply_to='.$data[$id]->id.'\',\'tweet\',\'scrollbars=yes,width=600,height=375\');">Reply</a>',
+						'<a href="javascript:;" onClick="window.open(\'https://twitter.com/intent/favorite?tweet_id='.$data[$id]->id.'\',\'favorite\',\'scrollbars=yes,width=600,height=375\');">Favorite</a>',
 					],
 					TWITTER_TWEET_STYLE);
 			}

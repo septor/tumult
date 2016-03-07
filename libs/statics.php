@@ -31,7 +31,6 @@ class Statics
 		foreach($files as $static)
 			$statics .= str_replace('{CONTENT}', $this->content($static), $this->blockstyle);
 
-
 		return $statics;
 	}
 }
