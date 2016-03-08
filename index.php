@@ -8,7 +8,7 @@ if(!file_exists('config/master.php'))
 
 include('_libs.php');
 
-if(defined(TUMULT_THEME))
+if(defined('TUMULT_THEME'))
 	$theme = (file_exists('themes/'.TUMULT_THEME) ? TUMULT_THEME : 'default');
 else
 	$theme = 'default';
