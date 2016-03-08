@@ -15,12 +15,19 @@ else
 
 $te = new Theme($theme);
 
-echo '<html>
+foreach($LOAD['css'] as $cssToLoad)
+	@$css .= '<link rel="stylesheet" href="themes/'.TUMULT_THEME.'/'.$cssToLoad.'">';
+
+echo '<!DOCTYPE html>
+<html>
 	<head>
+		<meta charset="UTF=8">
 		<title>'.TUMULT_SITENAME.'</title>
-		<link rel="stylesheet" href="themes/'.TUMULT_THEME.'/style.css">
+		'.$css.'
+		'.$LOAD['header'].'
 	</head>
 	<body>
 		'.$te->displayContent().'
 	</body>
+	'.$LOAD['footer'].'
 </html>';

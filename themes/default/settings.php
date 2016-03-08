@@ -8,6 +8,14 @@ $THEMEINFO = [
 	'author' => 'septor',
 ];
 
+$LOAD = [
+	'css' => [
+		'style.css',
+	],
+	'header' => '<!-- custom header code -->',
+	'footer' => '<!-- custom footer code -->',
+];
+
 define('POST_STYLE', '
 	<div>
 		{CONTENT}
