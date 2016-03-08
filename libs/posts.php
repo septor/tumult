@@ -19,9 +19,8 @@ class Posts
 		$content = array_splice($lines, 6);
 		$configLines = $lines;
 
-		$post = '';
 		foreach($content as $line)
-			$post .= $this->mdp->text($line);
+			@$post .= $this->mdp->text($line);
 
 		$output = [
 			'title' => $this->gatherConfig($configLines[2]),
@@ -51,12 +50,10 @@ class Posts
 
 	function fetchLocal()
 	{
-		$posts = '';
-
 		foreach(glob(TUMULT_POSTLOCATION.'/*.{markdown,mdown,mkdn,mkd,md}', GLOB_BRACE) as $post)
 		{
 			$newPost = $this->process($post);
-			$posts .= str_replace(
+			@$posts .= str_replace(
 				[
 					'{TITLE}',
 					'{DESCRIPTION}',
@@ -85,11 +82,10 @@ class Posts
 		$data = curl_exec($ch);
 		$data = json_decode($data);
 
-		$posts = '';
 		foreach($data as $post)
 		{
 			$newPost = $this->process($post->download_url);
-			$posts .= str_replace(
+			@$posts .= str_replace(
 				[
 					'{TITLE}',
 					'{DESCRIPTION}',

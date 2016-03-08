@@ -20,7 +20,6 @@ class Statics
 
 	function fetch($sort)
 	{
-		$statics = '';
 		$files = glob('statics/*.{markdown,mdown,mkdn,mkd,md}', GLOB_BRACE);
 		if($sort == 'asc')
 			asort($files);
@@ -28,7 +27,7 @@ class Statics
 			arsort($files);
 
 		foreach($files as $static)
-			$statics .= str_replace('{CONTENT}', $this->content($static), STATIC_STYLE);
+			@$statics .= str_replace('{CONTENT}', $this->content($static), STATIC_STYLE);
 
 		return $statics;
 	}

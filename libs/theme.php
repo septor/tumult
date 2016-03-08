@@ -23,12 +23,11 @@ class Theme
 			$posts = $this->bp->fetchRemote();
 
 		$services = glob('services/*', GLOB_ONLYDIR);
-		$loadServices = '';
 
 		foreach($services as $service)
 		{
 			$service = str_replace('services/', '', $service);
-			$loadServices .= $this->sd->loadService($service);
+			@$loadServices .= $this->sd->loadService($service);
 		}
 
 		$output = str_replace(

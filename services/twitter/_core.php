@@ -43,7 +43,7 @@ class Twitter
 	{
 		if(!(file_exists('tweets.json')) || time() - filemtime('tweets.json') > $this->cache)
 		{
-			$response = $this->twitter->setGetfield('?screen_name='.$this->user.'&include_rts='.$this->retweets)
+			$response = $this->twitter->setGetfield('?screen_name='.$this->username.'&include_rts='.$this->retweets)
 				->buildOauth('https://api.twitter.com/1.1/statuses/user_timeline.json', 'GET')
 				->performRequest();
 			file_put_contents('tweets.json', $response);
@@ -88,13 +88,12 @@ class Twitter
 		}
 
 		$b = 1;
-		$all_tweets = '';
 		foreach($sid as $id)
 		{
 			if($b <= $this->tweets)
 			{
 				$tweetDate = new DateTime($data[$id]->created_at);
-				$all_tweets .= str_replace(
+				@$all_tweets .= str_replace(
 					[
 						'{USERNAME}',
 						'{DATESTAMP}',
