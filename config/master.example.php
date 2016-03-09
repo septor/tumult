@@ -13,7 +13,7 @@ define('TUMULT_SITEOWNER',		'septor');
 // The below method only requires PHP5.6+ 
 const TUMULT_SOCIALDRINKS = [
 	'twitter' => 'septor',
-	'github' => 'septor',
+	'lastfm' => 'septor',
 ];
 
 // Theme you wish to use.

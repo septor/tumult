@@ -23,6 +23,10 @@ class Services
 				$load = new Twitter();
 				return $load->display();
 				break;
+			case 'lastfm':
+				$load = new Lastfm();
+				return $load->display();
+				break;
 		}
 	}
 }
