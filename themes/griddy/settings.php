@@ -10,6 +10,7 @@ $THEMEINFO = [
 
 $LOAD = [
 	'css' => [
+		'grid.css',
 		'style.css',
 	],
 	'header' => '',
@@ -17,21 +18,24 @@ $LOAD = [
 ];
 
 define('POST_STYLE', '
-	<div>
+	<div class="block">
 		{CONTENT}
 	</div>
 ');
 
 define('STATIC_STYLE', '
-	<div>
+	<div class="block">
 		{CONTENT}
 	</div>
 ');
 
 define('TWITTER_STYLE', '
-	<div>
-		@{USERNAME}<br />
-		{TWEETS}
+	<div class="block">
+		<h2>Twitter</h2>
+		<p>
+			@{USERNAME}<br />
+			{TWEETS}
+		</p>
 	</div>
 ');
 
