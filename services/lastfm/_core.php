@@ -1,10 +1,7 @@
 <?php
 /*
- * Scrobbls - A Last.fm Display plugin for e107
- *
- * Copyright (C) 2015 Patrick Weaver (http://trickmod.com/)
- * For additional information refer to the README.md file.
- *
+ * Tumult; get more information at:  http://tumultget.xyz/
+ * For contributions, copyrights, and more view the `docs` folder.
  */
 class Lastfm
 {
