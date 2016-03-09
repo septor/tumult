@@ -17,8 +17,8 @@ const TUMULT_SOCIALDRINKS = [
 ];
 
 // Theme you wish to use.
-// Defaults to 'default' if your theme isn't found or this isn't configured.
-define('TUMULT_THEME',			'default');
+// Defaults to 'griddy' if your theme isn't found or this isn't configured.
+define('TUMULT_THEME',			'griddy');
 
 // Sort type for static pages. Sorted by filename.
 // 'asc'	= A, B, C, D, E

@@ -9,9 +9,9 @@ if(!file_exists('config/master.php'))
 include('_libs.php');
 
 if(defined('TUMULT_THEME'))
-	$theme = (file_exists('themes/'.TUMULT_THEME) ? TUMULT_THEME : 'default');
+	$theme = (file_exists('themes/'.TUMULT_THEME) ? TUMULT_THEME : 'griddy');
 else
-	$theme = 'default';
+	$theme = 'griddy';
 
 $te = new Theme($theme);
 

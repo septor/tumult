@@ -7,7 +7,7 @@ class Theme
 {
 	public $theme;
 
-	function __construct($name='default')
+	function __construct($name='griddy')
 	{
 		$this->theme = $name;
 		$this->sp = new Statics();
