@@ -3,7 +3,7 @@
  * Tumult; get more information at:  http://tumultget.xyz/
  * For contributions, copyrights, and more view the `docs` folder.
  */
-class Posts
+class Posts extends Tumult
 {
 	public $mdp;
 
@@ -26,7 +26,7 @@ class Posts
 			'title' => $this->gatherConfig($configLines[2]),
 			'description' => $this->gatherConfig($configLines[3]),
 			'content' => $post,
-			'date' => filectime($file),
+			'date' => $file,
 		];
 
 		return $output;
@@ -55,7 +55,7 @@ class Posts
 				[
 					$newPost['title'],
 					$newPost['description'],
-					$newPost['content'],
+					htmlspecialchars_decode($newPost['content']),
 					date(TUMULT_POST_DATEFORMAT, $newPost['date']),
 				],
 				POST_STYLE);
@@ -66,12 +66,7 @@ class Posts
 
 	function fetchRemote()
 	{
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'https://api.github.com/repos/'.TUMULT_POSTLOCATION.'/contents/_posts');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-		curl_setopt($ch, CURLOPT_USERAGENT, 'Tumult Punch/1.0');
-		$data = curl_exec($ch);
+		$data = parent::curlFetch('https://api.github.com/repos/'.TUMULT_POSTLOCATION.'/contents/_posts');
 		$data = json_decode($data);
 
 		foreach($data as $post)

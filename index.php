@@ -8,12 +8,7 @@ if(!file_exists('config/master.php'))
 
 include('_libs.php');
 
-if(defined('TUMULT_THEME'))
-	$theme = (file_exists('themes/'.TUMULT_THEME) ? TUMULT_THEME : 'griddy');
-else
-	$theme = 'griddy';
-
-$te = new Theme($theme);
+$te = new Tumult();
 
 foreach($LOAD['css'] as $cssToLoad)
 	@$css .= '<link rel="stylesheet" href="themes/'.TUMULT_THEME.'/'.$cssToLoad.'">';
@@ -27,7 +22,7 @@ echo '<!DOCTYPE html>
 		'.$LOAD['header'].'
 	</head>
 	<body>
-		'.$te->displayContent().'
+		'.$te->loadContent().'
 	</body>
 	'.$LOAD['footer'].'
 </html>';
