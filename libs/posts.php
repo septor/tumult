@@ -26,7 +26,7 @@ class Posts
 			'title' => $this->gatherConfig($configLines[2]),
 			'description' => $this->gatherConfig($configLines[3]),
 			'content' => $post,
-			'date' => $this->getPostDate($file),
+			'date' => filectime($file),
 		];
 
 		return $output;
@@ -38,14 +38,6 @@ class Posts
 			return $matches[1];
 		else
 			return '';
-	}
-
-	function getPostDate($filename)
-	{
-		$tmp = explode('_', $filename);
-		$date = explode('-', $tmp[0]);
-
-		return strtotime($date[1].'/'.$date[2].'/'.$date[0]);
 	}
 
 	function fetchLocal()
