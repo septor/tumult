@@ -113,11 +113,10 @@ class Twitter
 			$b++;
 		}
 
-		$block = [
-			'username' => $this->username,
+		$output = $this->mustache->render(TWITTER_STYLE, [
+			'username' => $user,
 			'tweets' => $all_tweets,
-		];
-		$output = $this->mustache->render(TWITTER_STYLE, $block);
+		]);
 
 		return $output;
 	}

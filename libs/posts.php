@@ -65,14 +65,12 @@ class Posts extends Tumult
 			else
 				$newPost = $this->process($post->download_url);
 
-			$content = [
+			@$posts .= $this->mustache->render(POST_STYLE, [
 				'title' => $newPost['title'],
 				'description' => $newPost['description'],
 				'content' => $newPost['content'],
 				'date' => date(TUMULT_POST_DATEFORMAT, $newPost['date']['mtime']),
-			];
-			@$posts .=  $this->mustache->render(POST_STYLE, $content);
-			unset($content);
+			]);
 		}
 
 		return $posts;

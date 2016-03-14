@@ -39,11 +39,7 @@ class Tumult
 
 	function loadContent()
 	{
-		if(TUMULT_POSTLOCATION == '_posts')
-			$posts = $this->bp->fetchPosts('local');
-		else
-			$posts = $this->bp->fetchPosts('remote');
-
+		$posts = $this->bp->fetchPosts((TUMULT_POSTLOCATION == '_posts' ? 'local' : 'remote'));
 		$services = glob('services/*', GLOB_ONLYDIR);
 
 		if(count($services) > 0)
@@ -59,14 +55,14 @@ class Tumult
 			$loadServices = '';
 		}
 
-		$content = [
+		$output = $this->mustache->render($this->template, [
 			'sitename' => TUMULT_SITENAME,
 			'blog_column' => $posts,
 			'services_column' => $loadServices,
 			'statics_column' => $this->sd->fetch(TUMULT_STATICS_SORT),
 			'copyright' => 'Copyright '.date('Y').' '.TUMULT_SITEOWNER,
-		];
+		]);
 
-		return $this->mustache->render($this->template, $content);
+		return $output;
 	}
 }

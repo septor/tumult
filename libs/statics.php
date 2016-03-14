@@ -34,11 +34,9 @@ class Statics
 
 		foreach($files as $static)
 		{
-			$content = [
-				'content' => $this->content($static),
-			];
-			@$statics .=  $this->mustache->render(STATIC_STYLE, $content);
-			unset($content);
+			@$statics .=  $this->mustache->render(STATIC_STYLE, [
+				'content' => $this->content($statixc),
+			]);
 		}
 
 		return $statics;
