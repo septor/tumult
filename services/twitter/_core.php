@@ -3,7 +3,6 @@
  * Tumult; get more information at:  http://tumultget.xyz/
  * For contributions, copyrights, and more view the `docs` folder.
  */
-require_once('keys.php');
 require_once('TwitterAPIExchange.php');
 
 class Twitter
