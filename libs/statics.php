@@ -10,6 +10,12 @@ class Statics
 	function __construct()
 	{
 		$this->mdp = new Parsedown();
+		$this->mustache = new Mustache_Engine([
+			'escape' => function($value)
+			{
+				return $value;
+			}
+		]);
 	}
 
 	function content($file)
@@ -27,7 +33,13 @@ class Statics
 			arsort($files);
 
 		foreach($files as $static)
-			@$statics .= str_replace('{CONTENT}', $this->content($static), STATIC_STYLE);
+		{
+			$content = [
+				'content' => $this->content($static),
+			];
+			@$statics .=  $this->mustache->render(STATIC_STYLE, $content);
+			unset($content);
+		}
 
 		return $statics;
 	}

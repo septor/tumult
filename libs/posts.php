@@ -10,6 +10,12 @@ class Posts extends Tumult
 	function __construct()
 	{
 		$this->mdp = new Parsedown();
+		$this->mustache = new Mustache_Engine([
+			'escape' => function($value)
+			{
+				return $value;
+			}
+		]);
 	}
 
 	function process($file)
@@ -26,7 +32,7 @@ class Posts extends Tumult
 			'title' => $this->gatherConfig($configLines[2]),
 			'description' => $this->gatherConfig($configLines[3]),
 			'content' => $post,
-			'date' => $file,
+			'date' => stat($file),
 		];
 
 		return $output;
@@ -40,52 +46,33 @@ class Posts extends Tumult
 			return '';
 	}
 
-	function fetchLocal()
+	function fetchPosts($loc)
 	{
+		if($loc == 'local')
+		{
+			$data = glob(TUMULT_POSTLOCATION.'/*.{markdown,mdown,mkdn,mkd,md}', GLOB_BRACE);
+		}
+		else
+		{
+			$data = parent::curlFetch('https://api.github.com/repos/'.TUMULT_POSTLOCATION.'/contents/_posts');
+			$data = json_decode($data);
+		}
+			
 		foreach(glob(TUMULT_POSTLOCATION.'/*.{markdown,mdown,mkdn,mkd,md}', GLOB_BRACE) as $post)
 		{
-			$newPost = $this->process($post);
-			@$posts .= str_replace(
-				[
-					'{TITLE}',
-					'{DESCRIPTION}',
-					'{CONTENT}',
-					'{DATE}',
-				],
-				[
-					$newPost['title'],
-					$newPost['description'],
-					htmlspecialchars_decode($newPost['content']),
-					date(TUMULT_POST_DATEFORMAT, $newPost['date']),
-				],
-				POST_STYLE);
-		}
+			if($loc == 'local')
+				$newPost = $this->process($post);
+			else
+				$newPost = $this->process($post_download_url);
 
-		return $posts;
-	}
-
-	function fetchRemote()
-	{
-		$data = parent::curlFetch('https://api.github.com/repos/'.TUMULT_POSTLOCATION.'/contents/_posts');
-		$data = json_decode($data);
-
-		foreach($data as $post)
-		{
-			$newPost = $this->process($post->download_url);
-			@$posts .= str_replace(
-				[
-					'{TITLE}',
-					'{DESCRIPTION}',
-					'{CONTENT}',
-					'{DATE}',
-				],
-				[
-					$newPost['title'],
-					$newPost['description'],
-					$newPost['content'],
-					date(TUMULT_POST_DATEFORMAT, $newPost['date']),
-				],
-				POST_STYLE);
+			$content = [
+				'title' => $newPost['title'],
+				'description' => $newPost['description'],
+				'content' => $newPost['content'],
+				'date' => date(TUMULT_POST_DATEFORMAT, $newPost['date']['mtime']),
+			];
+			@$posts .=  $this->mustache->render(POST_STYLE, $content);
+			unset($content);
 		}
 
 		return $posts;

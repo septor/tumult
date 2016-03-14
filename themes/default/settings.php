@@ -18,28 +18,28 @@ $LOAD = [
 
 define('POST_STYLE', '
 	<div>
-		{CONTENT}
+		{{content}}
 	</div>
 ');
 
 define('STATIC_STYLE', '
 	<div>
-		{CONTENT}
+		{{content}}
 	</div>
 ');
 
 define('TWITTER_STYLE', '
 	<div>
-		@{USERNAME}<br />
-		{TWEETS}
+		@{{username}}<br />
+		{{tweets}}
 	</div>
 ');
 
 define('TWITTER_TWEET_STYLE', '
 	<hr />
 	<p>
-		{DATESTAMP}<br />
-		{STATUS}<br />
-		{REPLY} - {RETWEET} - {FAVORITE}
+		{{datestamp}}<br />
+		{{status}}<br />
+		{{reply} - {{retweet}} - {{favorite}}
 	</p>
 ');

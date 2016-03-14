@@ -7,7 +7,12 @@ class Tumult
 {
 	function __construct()
 	{
-		$this->mustache = new Mustache_Engine;
+		$this->mustache = new Mustache_Engine([
+			'escape' => function($value)
+			{
+				return $value;
+			}
+		]);
 
 		if(defined('TUMULT_THEME'))
 			$this->theme = (file_exists('themes/'.TUMULT_THEME) ? TUMULT_THEME : 'griddy');
@@ -35,9 +40,9 @@ class Tumult
 	function loadContent()
 	{
 		if(TUMULT_POSTLOCATION == '_posts')
-			$posts = $this->bp->fetchLocal();
+			$posts = $this->bp->fetchPosts('local');
 		else
-			$posts = $this->bp->fetchRemote();
+			$posts = $this->bp->fetchPosts('remote');
 
 		$services = glob('services/*', GLOB_ONLYDIR);
 

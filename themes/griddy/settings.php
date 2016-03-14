@@ -19,13 +19,15 @@ $LOAD = [
 
 define('POST_STYLE', '
 	<div class="block">
-		{CONTENT}
+		{{content}}
+		<br /><br />
+		last modified: {{date}}
 	</div>
 ');
 
 define('STATIC_STYLE', '
 	<div class="block">
-		{CONTENT}
+		{{content}}
 	</div>
 ');
 
@@ -33,8 +35,8 @@ define('TWITTER_STYLE', '
 	<div class="block">
 		<h2>Twitter</h2>
 		<p>
-			@{USERNAME}<br />
-			{TWEETS}
+			@{{username}}<br />
+			{{tweets}}
 		</p>
 	</div>
 ');
@@ -42,8 +44,8 @@ define('TWITTER_STYLE', '
 define('TWITTER_TWEET_STYLE', '
 	<hr />
 	<p>
-		{DATESTAMP}<br />
-		{STATUS}<br />
-		{REPLY} - {RETWEET} - {FAVORITE}
+		{{datestamp}}<br />
+		{{status}}<br />
+		{{reply}} - {{retweet}} - {{favorite}}
 	</p>
 ');
