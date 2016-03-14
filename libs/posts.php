@@ -63,7 +63,7 @@ class Posts extends Tumult
 			if($loc == 'local')
 				$newPost = $this->process($post);
 			else
-				$newPost = $this->process($post_download_url);
+				$newPost = $this->process($post->download_url);
 
 			$content = [
 				'title' => $newPost['title'],
