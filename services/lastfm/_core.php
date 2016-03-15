@@ -3,23 +3,35 @@
  * Tumult; get more information at:  http://tumultget.xyz/
  * For contributions, copyrights, and more view the `docs` folder.
  */
-class Lastfm
+class Lastfm extends Tumult
 {
 	function __construct()
 	{
 		$this->key = LASTFM_APIKEY;
 		$this->user = TUMULT_SOCIALDRINKS['lastfm'];
+
+		$this->mustache = new Mustache_Engine([
+			'escape' => function($value)
+			{
+				return $value;
+			}
+		]);
 	}
 
 	function retrieve($data)
 	{
-		$url = 'http://ws.audioscrobbler.com/2.0/?method='.$data.'&api_key='.$this->key;
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-		$result = curl_exec($ch);
+		$result = parent::curlFetch('http://ws.audioscrobbler.com/2.0/?method='.$data.'&api_key='.$this->key);
 		return simplexml_load_string($result);
+	}
+
+	function display()
+	{
+		$output = $this->mustache->render(LASTFM_STYLE, [
+			'username' => $this->getInfo()['name'],
+			'playcount' => $this->getInfo()['playcount'],
+		]);
+
+		return $output;
 	}
 
 	function getInfo()

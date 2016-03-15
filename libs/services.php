@@ -8,11 +8,9 @@ class Services
 	function hasConfig($service)
 	{
 		if(file_exists('config/'.$service.'.php'))
-			$output = true;
+			return true;
 		else
-			$output = false;
-
-		return $output;
+			return false;
 	}
 
 	function loadService($service)

@@ -47,7 +47,7 @@ class Tumult
 			foreach($services as $service)
 			{
 				$service = str_replace('services/', '', $service);
-				@$loadServices .= $this->sd->loadService($service);
+				@$loadServices .= $this->sp->loadService($service);
 			}
 		}
 		else

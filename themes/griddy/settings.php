@@ -49,3 +49,12 @@ define('TWITTER_TWEET_STYLE', '
 		{{reply}} - {{retweet}} - {{favorite}}
 	</p>
 ');
+
+define('LASTFM_STYLE', '
+	<div class="block">
+		<h2>Last.fm</h2>
+		<p>
+			{{username}} has scrobbled {{playcount}}!
+		</p>
+	</div>
+');
