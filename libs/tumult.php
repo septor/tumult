@@ -15,9 +15,9 @@ class Tumult
 		]);
 
 		if(defined('TUMULT_THEME'))
-			$this->theme = (file_exists('themes/'.TUMULT_THEME) ? TUMULT_THEME : 'griddy');
+			$this->theme = (file_exists('themes/'.TUMULT_THEME) ? TUMULT_THEME : 'default');
 		else
-			$this->theme = 'griddy';
+			$this->theme = 'default';
 
 		$this->template = file_get_contents('themes/'.$this->theme.'/template.html');
 		$this->bp = new Posts();

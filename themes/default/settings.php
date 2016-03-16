@@ -10,28 +10,34 @@ $THEMEINFO = [
 
 $LOAD = [
 	'css' => [
+		'grid.css',
 		'style.css',
 	],
-	'header' => '<!-- custom header code -->',
-	'footer' => '<!-- custom footer code -->',
+	'header' => '',
+	'footer' => '',
 ];
 
 define('POST_STYLE', '
-	<div>
+	<div class="block">
 		{{content}}
+		<br /><br />
+		last modified: {{date}}
 	</div>
 ');
 
 define('STATIC_STYLE', '
-	<div>
+	<div class="block">
 		{{content}}
 	</div>
 ');
 
 define('TWITTER_STYLE', '
-	<div>
-		@{{username}}<br />
-		{{tweets}}
+	<div class="block">
+		<h2>Twitter</h2>
+		<p>
+			@{{username}}<br />
+			{{tweets}}
+		</p>
 	</div>
 ');
 
@@ -40,7 +46,7 @@ define('TWITTER_TWEET_STYLE', '
 	<p>
 		{{datestamp}}<br />
 		{{status}}<br />
-		{{reply} - {{retweet}} - {{favorite}}
+		{{reply}} - {{retweet}} - {{favorite}}
 	</p>
 ');
 

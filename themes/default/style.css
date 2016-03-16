@@ -1,99 +1,20 @@
-$import url(http://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 
 body {
-	font-family: 'Open Sans', sans-serif;
-	color: #666;
-}
-#wrapper {
-	padding: 5px;
-	width: 960px;
-	margin: 20px auto;
-}
-header {
-	height: 100px;
-	padding: 0 15px;
-}
-#content {
-	width: 290px;
-	float: left;
-	padding: 5px 15px;
+	font-family: 'Roboto', sans-serif;
+	margin: 1% 1% 0 1.6%;
+	background: 
+    linear-gradient(
+	  rgba(63, 81, 181, 0.65),
+	  rgba(63, 81, 181, 0.65)
+    ),
+    url('images/background.png');
 }
 
-#middle {
-	width: 294px;
-	float: left;
-	padding: 5px 15px;
-	margin: 0px 5px 5px 5px;
-}
-
-#sidebar {
-	width: 270px;
-	padding: 5px 15px;
-	float: left;
-}
-footer {
-	clear: both;
-	padding: 0 15px;
-}
-
-@media screen and (max-width: 980px) {
-
-	#wrapper {
-		width: 94%;
-	}
-	#content {
-		width: 41%;
-		padding: 1% 4%;
-	}
-	#middle {
-		width: 41%;
-		padding: 1% 4%;
-		margin: 0px 0px 5px 5px;
-		float: right;
-	}
-	#sidebar {
-		clear: both;
-		padding: 1% 4%;
-		width: auto;
-		float: none;
-	}
-	header, footer {
-		padding: 1% 4%;
-	}
-}
-
-@media screen and (max-width: 600px) {
-	#content {
-		width: auto;
-		float: none;
-	}
-	#middle {
-		width: auto;
-		float: none;
-		margin-left: 0px;
-	}
-	#sidebar {
-		width: auto;
-		float: none;
-	}
-}
-
-@media screen and (max-width: 480px) {
-	header {
-		height: auto;
-	}
-	h1 {
-		font-size: 2em;
-	}
-	#sidebar {
-		display: none;
-	}
-}
-
-header, #content, #middle, #sidebar {
-	margin-bottom: 5px;
-}
-
-header, #content, #middle, #sidebar, footer {
-	border: solid 1px #ccc;
+.block {
+	padding: 1px 3%;
+	background-color: #fff;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+	margin-bottom: 7.6%;
+	opacity: 0.6;
 }
