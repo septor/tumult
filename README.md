@@ -16,7 +16,13 @@ Services are written to be as easy to add as possible. Unless there's an authent
 
 ## Themes
 
-Yes, Tumult has a theme engine! It's currently in the middle of getting adjustments and finalizations so I won't go into much detail yet!
+Almost every HTML template can become a Tumult theme. Themes require 3 files to function:
+
+* `template.html` -> This is where everything between the `<body>` tags goes.
+* `styles.php` -> This is where your block styles go.
+* `settings.php` -> You define your theme's name and this is where you define your stylesheets and where you can add custom code to the header or footer of the page.
+
+The rest of the content inside your theme's folder is totally up to you. You can read more on the wiki.
 
 ## Requirements
 
@@ -24,9 +30,7 @@ While Tumult is in a very early stage and these may change, here are the minimum
 
 * PHP 5.6+
 
-**Why 5.6+?** -- In the beginning I was shooting for 5.4+ becuase I was using short arrays `$names = ['tim', 'bob'];` instead of the longer format `$names = array('time', 'bob');` and this is only supported in 5.4+. To make specifying your social usernames easier I want to use an array in a constant. You can do that in `define()` but that requires PHP7+, so, I'm using a different approach.
-
-Please note, as stated above, this is still early in the development so I may throw this last idea out and drop the minimum back down to 5.4+.
+_Requirements are subject to change as development continues. It's more beneficial to keep requirements low, so work will constantly be made to lower the requirements where possible!_
 
 ### Optional Requirements
 

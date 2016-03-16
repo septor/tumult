@@ -15,8 +15,9 @@ include('config/master.php');
 // Now we need the core lib file, since some of the other libs extend onto it.
 include('libs/tumult.php');
 
-// Load the theme settings file.
+// Load the theme files.
 include('themes/'.TUMULT_THEME.'/settings.php');
+include('themes/'.TUMULT_THEME.'/styles.php');
 
 // Load in the services _core.php and key.php files.
 foreach(glob('services/*', GLOB_ONLYDIR) as $service)
