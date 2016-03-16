@@ -26,9 +26,19 @@ class Lastfm extends Tumult
 
 	function display()
 	{
+		foreach($this->getRecentTracks('limit=5') as $track)
+		{
+			@$recent_tracks .= $this->mustache->render(LASTFM_RECENTTRACK_STYLE, [
+				'track_name' => $track['name'],
+				'track_artist' => $track['artist'],
+				'track_album' => $track['album'],
+			]);
+		}
+
 		$output = $this->mustache->render(LASTFM_STYLE, [
 			'username' => $this->getInfo()['name'],
 			'playcount' => $this->getInfo()['playcount'],
+			'recent_tracks' => $recent_tracks,
 		]);
 
 		return $output;

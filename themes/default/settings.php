@@ -43,3 +43,19 @@ define('TWITTER_TWEET_STYLE', '
 		{{reply} - {{retweet}} - {{favorite}}
 	</p>
 ');
+
+define('LASTFM_STYLE', '
+	<div class="block">
+		<h2>Last.fm</h2>
+		<p>
+			{{username}} has scrobbled {{playcount}} tracks! Here\'s the latest:
+			<ul>
+				{{recent_tracks}}
+			</ul>
+		</p>
+	</div>
+');
+
+define('LASTFM_RECENTTRACK_STYLE', '
+	<li>{{track_name}} by {{track_artist}}</li>
+');
