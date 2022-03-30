@@ -1,6 +1,6 @@
 <?php
 /*
- * Tumult; get more information at:  http://tumultget.xyz/
+ * Tumult; get more information at:  https://github.com/septor/tumult
  * For contributions, copyrights, and more view the `docs` folder.
  */
 if(!file_exists('config/master.php'))
@@ -8,7 +8,7 @@ if(!file_exists('config/master.php'))
 
 include('_libs.php');
 
-$te = new Tumult();
+$tumult = new Tumult();
 
 foreach($LOAD['css'] as $cssToLoad)
 	@$css .= '<link rel="stylesheet" href="themes/'.TUMULT_THEME.'/'.$cssToLoad.'">';
@@ -22,7 +22,7 @@ echo '<!DOCTYPE html>
 		'.$LOAD['header'].'
 	</head>
 	<body>
-		'.$te->loadContent().'
+		'.$tumult->loadContent().'
 	</body>
 	'.$LOAD['footer'].'
 </html>';

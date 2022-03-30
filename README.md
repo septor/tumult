@@ -1,7 +1,5 @@
 # Tumult
 
-**Attention: This project is likely discountinued. Follow along [here](https://github.com/septor/itsme) for a new approach.**
-
 Tumult is a content aggregator used to publish data from several locations onto one single page for easy viewing. It's written in PHP and utilizes Markdown to serve up static content such as blog posts and "About Me" blurbs.
 
 ## Statics (Blog Posts, Static Blocks)
