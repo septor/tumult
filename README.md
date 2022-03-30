@@ -10,7 +10,7 @@ Statics are used to describe content that is handled entirely by Tumult. Static 
 
 Think of these as the bulk of your content. Yeah, you can have static content, but that gets old for frequent site vistors. Services are things like your Tweets from Twitter, your new photos on Instagram, your latest listened to tracks according to Last.fm, and even your latest activity on GitHub.
 
-Services are written to be as easy to add as possible. Unless there's an authentication requirement, you can simply drop a service into the `services` folder and be done with it. If authentication is required you only need to modify a `keys.php` file. Additional configuration, for all services, can be achieved by creating a file and throwing it in your `config` directory. More information on this can be found on each individual services wiki article.
+Services are written to be as easy to add as possible. Unless there's an authentication requirement, you can simply drop a service into the `services` folder and be done with it. If authentication is required you only need to modify the `config/keys.php` file and include the required defines. Additional configuration, for all services, can be achieved by creating a file and throwing it in your `config` directory. More information on this can be found on each individual services wiki article.
 
 ## Themes
 

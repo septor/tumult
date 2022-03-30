@@ -61,7 +61,7 @@ class Tumult
 			'services_column' => $loadServices,
 			'statics_column' => $this->sd->fetch(TUMULT_STATICS_SORT),
 			'copyright' => 'Copyright '.date('Y').' '.TUMULT_SITEOWNER,
-			'poweredby' => 'Powered by <a href="http://tumultget.xyz/">Tumult</a>',
+			'poweredby' => 'Powered by <a href="https://github.com/septor/tumult">Tumult</a>',
 		]);
 
 		return $output;

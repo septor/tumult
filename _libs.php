@@ -19,12 +19,14 @@ include('libs/tumult.php');
 include('themes/'.TUMULT_THEME.'/settings.php');
 include('themes/'.TUMULT_THEME.'/styles.php');
 
-// Load in the services _core.php and key.php files.
+// Load in the services _core.php files.
 foreach(glob('services/*', GLOB_ONLYDIR) as $service)
 {
 	include($service.'/_core.php');
-	include($service.'/keys.php');
 }
+
+// Load the services keys file.
+include('config/keys.php');
 
 // Load in the remaining lib files.
 include('libs/services.php');
