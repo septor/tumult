@@ -3,7 +3,7 @@
 /*
  * This file is part of Mustache.php.
  *
- * (c) 2010-2015 Justin Hileman
+ * (c) 2010-2017 Justin Hileman
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -63,7 +63,7 @@ class Mustache_Parser
     /**
      * Helper method for recursively building a parse tree.
      *
-     * @throws Mustache_Exception_SyntaxException when nesting errors or mismatched section tags are encountered.
+     * @throws Mustache_Exception_SyntaxException when nesting errors or mismatched section tags are encountered
      *
      * @param array &$tokens Set of Mustache tokens
      * @param array $parent  Parent token (default: null)
@@ -149,7 +149,7 @@ class Mustache_Parser
                 case Mustache_Tokenizer::T_BLOCK_VAR:
                     if ($this->pragmaBlocks) {
                         // BLOCKS pragma is enabled, let's do this!
-                        if ($parent[Mustache_Tokenizer::TYPE] === Mustache_Tokenizer::T_PARENT) {
+                        if (isset($parent) && $parent[Mustache_Tokenizer::TYPE] === Mustache_Tokenizer::T_PARENT) {
                             $token[Mustache_Tokenizer::TYPE] = Mustache_Tokenizer::T_BLOCK_ARG;
                         }
                         $this->clearStandaloneLines($nodes, $tokens);
@@ -195,10 +195,10 @@ class Mustache_Parser
      *
      * Returns a whitespace token for indenting partials, if applicable.
      *
-     * @param array $nodes  Parsed nodes.
-     * @param array $tokens Tokens to be parsed.
+     * @param array $nodes  Parsed nodes
+     * @param array $tokens Tokens to be parsed
      *
-     * @return array|null Resulting indent token, if any.
+     * @return array|null Resulting indent token, if any
      */
     private function clearStandaloneLines(array &$nodes, array &$tokens)
     {
@@ -268,14 +268,14 @@ class Mustache_Parser
     /**
      * Check whether a token is allowed inside a parent tag.
      *
-     * @throws Mustache_Exception_SyntaxException if an invalid token is found inside a parent tag.
+     * @throws Mustache_Exception_SyntaxException if an invalid token is found inside a parent tag
      *
      * @param array|null $parent
      * @param array      $token
      */
     private function checkIfTokenIsAllowedInParent($parent, array $token)
     {
-        if ($parent[Mustache_Tokenizer::TYPE] === Mustache_Tokenizer::T_PARENT) {
+        if (isset($parent) && $parent[Mustache_Tokenizer::TYPE] === Mustache_Tokenizer::T_PARENT) {
             throw new Mustache_Exception_SyntaxException('Illegal content in < parent tag', $token);
         }
     }
