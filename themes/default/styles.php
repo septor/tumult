@@ -6,7 +6,7 @@
 define('POST_STYLE', '
 	<div class="block">
 		{{content}}
-		<br /><br />
+		<br><br>
 		last modified: {{date}}
 	</div>
 ');
@@ -21,7 +21,7 @@ define('TWITTER_STYLE', '
 	<div class="block">
 		<h2>Twitter</h2>
 		<p>
-			@{{username}}<br />
+			@{{username}}<br>
 			{{tweets}}
 		</p>
 	</div>
@@ -30,8 +30,8 @@ define('TWITTER_STYLE', '
 define('TWITTER_TWEET_STYLE', '
 	<hr />
 	<p>
-		{{datestamp}}<br />
-		{{status}}<br />
+		{{datestamp}}<br>
+		{{status}}<br><br>
 		{{reply}} - {{retweet}} - {{favorite}}
 	</p>
 ');
