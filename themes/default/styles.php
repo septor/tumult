@@ -7,7 +7,8 @@ define('POST_STYLE', '
 	<div class="block">
 		{{content}}
 		<br><br>
-		last modified: {{date}}
+		created on: {{created}}<br>
+		last modified: {{updated}}
 	</div>
 ');
 

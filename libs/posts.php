@@ -24,6 +24,7 @@ class Posts extends Tumult
 
 		$content = array_splice($lines, 6);
 		$configLines = $lines;
+		$filetime = explode('_', str_replace("_posts/", "", $file));
 
 		foreach($content as $line)
 			@$post .= $this->mdp->text($line);
@@ -32,7 +33,8 @@ class Posts extends Tumult
 			'title' => $this->gatherConfig($configLines[2]),
 			'description' => $this->gatherConfig($configLines[3]),
 			'content' => $post,
-			'date' => stat($file),
+			'created' => $filetime[0],
+			'updated' => stat($file),
 		];
 
 		return $output;
@@ -69,7 +71,8 @@ class Posts extends Tumult
 				'title' => $newPost['title'],
 				'description' => $newPost['description'],
 				'content' => $newPost['content'],
-				'date' => date(TUMULT_POST_DATEFORMAT, $newPost['date']['mtime']),
+				'created' => date(TUMULT_POST_DATEFORMAT, strtotime($newPost['created'])),
+				'updated' => date(TUMULT_POST_DATEFORMAT, $newPost['updated']['mtime']),
 			]);
 		}
 
