@@ -9,11 +9,16 @@ define('TUMULT_SITENAME', 'Tumult');
 define('TUMULT_SITEOWNER', 'septor');
 
 // Socal Network usernames.
-// Note: define() is not used here because that requires PHP7+.
-// The below method only requires PHP5.6+
 const TUMULT_SOCIALDRINKS = [
 	'twitter' => 'septor',
 	'lastfm' => 'septor',
+];
+
+// Decide which services should be loaded.
+// To inactivate a service, simply remove it from the array. Or comment it out if you're a barbarian.
+const TUMULT_SERVICES = [
+	'twitter',
+	'lastfm'
 ];
 
 // Theme you wish to use.

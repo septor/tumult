@@ -14,7 +14,6 @@ class Lastfm extends Tumult
 		if($this->sd->hasConfig('lastfm'))
 		{
 			$this->count = LASTFM_TRACKCOUNT;
-			echo $this->count;
 		}
 		else
 		{
