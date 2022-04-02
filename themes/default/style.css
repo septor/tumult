@@ -2,12 +2,8 @@
 
 body {
 	font-family: 'JetBrains Mono', monospace;
-	margin: 1% 1% 0 1.6%;
-	background: url('images/background.png') no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+	margin: 1% 1% 0 1%;
+	background-color: #222;
 }
 
 a {
