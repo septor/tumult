@@ -7,8 +7,19 @@ class Lastfm extends Tumult
 {
 	function __construct()
 	{
+		$this->sd = new Services();
 		$this->key = LASTFM_APIKEY;
 		$this->user = TUMULT_SOCIALDRINKS['lastfm'];
+
+		if($this->sd->hasConfig('lastfm'))
+		{
+			$this->count = LASTFM_TRACKCOUNT;
+			echo $this->count;
+		}
+		else
+		{
+			$this->count = 5;
+		}
 
 		$this->mustache = new Mustache_Engine([
 			'escape' => function($value)
@@ -26,7 +37,7 @@ class Lastfm extends Tumult
 
 	function display()
 	{
-		foreach($this->getRecentTracks('limit=5') as $track)
+		foreach($this->getRecentTracks('limit='.$this->count) as $track)
 		{
 			@$recent_tracks .= $this->mustache->render(LASTFM_RECENTTRACK_STYLE, [
 				'track_name' => $track['name'],
