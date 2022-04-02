@@ -12,4 +12,10 @@ Parsedown is a Markdown parser for PHP. It is used to parse the Markdown files u
 ## Mustache.php
 [GitHub Repo](https://github.com/bobthecow/mustache.php) - [Website](http://mustache.github.io/)
 
-Mustache is a logic-less template system. We're using the PHP implementation of Mustache to act as our shortcode engine.
+Mustache is a logic-less template system. I'm using the PHP implementation of Mustache to act as the shortcode engine.
+
+
+## Twitter-API-PHP
+[GitHub Repo](http://github.com/j7mbo/twitter-api-php)
+
+The Twitter service uses this file to process most of Twitter's API requests so that I don't have to pull my hair out.
