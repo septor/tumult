@@ -42,13 +42,31 @@ class Lastfm extends Tumult
 				'track_name' => $track['name'],
 				'track_artist' => $track['artist'],
 				'track_album' => $track['album'],
+				'small_artwork' => $track['smallImage'],
+				'medium_artwork' => $track['mediumImage'],
+				'large_artwork' => $track['largeImage'],
+				'extralarge_artwork' => $track['extraLargeImage'],
 			]);
+
+			@$smallImages .= $track['smallImage'].',';
+			@$mediumImages .= $track['mediumImage'].',';
+			@$largeImages .= $track['largeImage'].',';
+			@$extraLargeImages .= $track['extraLargeImage'].',';
 		}
+		
+		$smallArray = explode(',', $smallImages);
+		$mediumArray = explode(',', $mediumImages);
+		$largeArray = explode(',', $largeImages);
+		$extraLargeArray = explode(',', $extraLargeImages);
 
 		$output = $this->mustache->render(LASTFM_STYLE, [
 			'username' => $this->getInfo()['name'],
 			'playcount' => $this->getInfo()['playcount'],
 			'recent_tracks' => $recent_tracks,
+			'random_small_artwork' => $smallArray[rand(0, count($smallArray) - 1)],
+			'random_medium_artwork' => $mediumArray[rand(0, count($mediumArray) - 1)],
+			'random_large_artwork' => $largeArray[rand(0, count($largeArray) - 1)],
+			'random_extralarge_artwork' => $extraLargeArray[rand(0, count($extraLargeArray) - 1)],
 		]);
 
 		return $output;
@@ -114,6 +132,10 @@ class Lastfm extends Tumult
 				'name' => $track->name,
 				'album' => $track->album,
 				'url' => $track->url,
+				'smallImage' => $track->image[0],
+				'mediumImage' => $track->image[1],
+				'largeImage' => $track->image[2],
+				'extraLargeImage' => $track->image[3],
 				'date' => $track->date['uts'],
 				'streamable' => $track->streamable,
 			);

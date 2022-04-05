@@ -40,8 +40,11 @@ define('TWITTER_TWEET_STYLE', '
 define('LASTFM_STYLE', '
 	<div class="block">
 		<h2>Last.fm</h2>
+		<p style="text-align:center;">
+			<img src="{{random_large_artwork}}" />
+		</p>
 		<p>
-			{{username}} has scrobbled {{playcount}} tracks! Here\'s the latest:
+			{{username}} has scrobbled {{playcount}} tracks! Here\'s the latest:<br>
 			<ul>
 				{{recent_tracks}}
 			</ul>
@@ -50,5 +53,5 @@ define('LASTFM_STYLE', '
 ');
 
 define('LASTFM_RECENTTRACK_STYLE', '
-	<li>{{track_name}} by {{track_artist}}</li>
+	<li><img src="{{small_artwork}}"> {{track_name}} by {{track_artist}}</li>
 ');
