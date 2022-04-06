@@ -4,4 +4,4 @@
  * For contributions, copyrights, and more view the `docs` folder.
  */
 
-define('TUMULT_VERSION', 'alpha3')
+define('TUMULT_VERSION', 'beta1')
