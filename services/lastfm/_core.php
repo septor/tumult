@@ -36,37 +36,32 @@ class Lastfm extends Tumult
 
 	function display()
 	{
+		$artworks = [];
 		foreach($this->getRecentTracks('limit='.$this->count) as $track)
 		{
 			@$recent_tracks .= $this->mustache->render(LASTFM_RECENTTRACK_STYLE, [
 				'track_name' => $track['name'],
 				'track_artist' => $track['artist'],
 				'track_album' => $track['album'],
-				'small_artwork' => $track['smallImage'],
-				'medium_artwork' => $track['mediumImage'],
-				'large_artwork' => $track['largeImage'],
-				'extralarge_artwork' => $track['extraLargeImage'],
+				'small_artwork' => '<img style="width: 34px; height: 34px;" src="'.$track['artwork'].'">',
+				'medium_artwork' => '<img style="width: 64px; height: 64px;" src="'.$track['artwork'].'">',
+				'large_artwork' => '<img style="width: 174px; height: 174px;" src="'.$track['artwork'].'">',
+				'extralarge_artwork' => '<img style="width: 300px; height: 300px;" src="'.$track['artwork'].'">',
 			]);
 
-			@$smallImages .= $track['smallImage'].',';
-			@$mediumImages .= $track['mediumImage'].',';
-			@$largeImages .= $track['largeImage'].',';
-			@$extraLargeImages .= $track['extraLargeImage'].',';
+			array_push($artworks, $track['artwork']);
 		}
 		
-		$smallArray = explode(',', $smallImages);
-		$mediumArray = explode(',', $mediumImages);
-		$largeArray = explode(',', $largeImages);
-		$extraLargeArray = explode(',', $extraLargeImages);
+		$randomArtwork = $artworks[rand(0, count($artworks) - 1)];
 
 		$output = $this->mustache->render(LASTFM_STYLE, [
 			'username' => $this->getInfo()['name'],
 			'playcount' => $this->getInfo()['playcount'],
 			'recent_tracks' => $recent_tracks,
-			'random_small_artwork' => $smallArray[rand(0, count($smallArray) - 1)],
-			'random_medium_artwork' => $mediumArray[rand(0, count($mediumArray) - 1)],
-			'random_large_artwork' => $largeArray[rand(0, count($largeArray) - 1)],
-			'random_extralarge_artwork' => $extraLargeArray[rand(0, count($extraLargeArray) - 1)],
+			'random_small_artwork' => '<img style="width: 34px; height: 34px;" src="'.$randomArtwork.'">',
+			'random_medium_artwork' => '<img style="width: 64px; height: 64px;" src="'.$randomArtwork.'">',
+			'random_large_artwork' => '<img style="width: 174px; height: 174px;" src="'.$randomArtwork.'">',
+			'random_extralarge_artwork' => '<img style="width: 300px; height: 300px;" src="'.$randomArtwork.'">',
 		]);
 
 		return $output;
@@ -132,10 +127,7 @@ class Lastfm extends Tumult
 				'name' => $track->name,
 				'album' => $track->album,
 				'url' => $track->url,
-				'smallImage' => $track->image[0],
-				'mediumImage' => $track->image[1],
-				'largeImage' => $track->image[2],
-				'extraLargeImage' => $track->image[3],
+				'artwork' => $track->image[3],
 				'date' => $track->date['uts'],
 				'streamable' => $track->streamable,
 			);

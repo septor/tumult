@@ -41,7 +41,7 @@ define('LASTFM_STYLE', '
 	<div class="block">
 		<h2>Last.fm</h2>
 		<p style="text-align:center;">
-			<img src="{{random_large_artwork}}" />
+			{{random_large_artwork}}
 		</p>
 		<p>
 			{{username}} has scrobbled {{playcount}} tracks! Here\'s the latest:<br>
@@ -53,5 +53,5 @@ define('LASTFM_STYLE', '
 ');
 
 define('LASTFM_RECENTTRACK_STYLE', '
-	<li><img src="{{small_artwork}}"> {{track_name}} by {{track_artist}}</li>
+	<li>{{small_artwork}} {{track_name}} by {{track_artist}}</li>
 ');
