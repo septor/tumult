@@ -11,13 +11,17 @@ class Lastfm extends Tumult
 		$this->key = LASTFM_APIKEY;
 		$this->user = TUMULT_SOCIALDRINKS['lastfm'];
 
+		$default_count = 5;
+
 		if($this->sd->hasConfig('lastfm'))
 		{
-			$this->count = LASTFM_TRACKCOUNT;
+			$this->recent_count = (defined(LASTFM_RECENTTRACKCOUNT) ? LASTFM_RECENTTRACKCOUNT : $default_count);
+			$this->loved_count = (defined(LASTFM_LOVEDTRACKCOUNT) ? LASTFM_LOVEDTRACKCOUNT : $default_count);
 		}
 		else
 		{
-			$this->count = 5;
+			$this->recent_count = $default_count;
+			$this->loved_count = $default_count;
 		}
 
 		$this->mustache = new Mustache_Engine([
@@ -36,8 +40,8 @@ class Lastfm extends Tumult
 
 	function display()
 	{
-		$artworks = [];
-		foreach($this->getRecentTracks('limit='.$this->count) as $track)
+		$recent_artworks = [];
+		foreach($this->getRecentTracks('limit='.$this->recent_count) as $track)
 		{
 			@$recent_tracks .= $this->mustache->render(LASTFM_RECENTTRACK_STYLE, [
 				'track_name' => $track['name'],
@@ -49,15 +53,30 @@ class Lastfm extends Tumult
 				'extralarge_artwork' => '<img style="width: 300px; height: 300px;" src="'.$track['artwork'].'">',
 			]);
 
-			array_push($artworks, $track['artwork']);
+			array_push($recent_artworks, $track['artwork']);
+		}
+
+		foreach($this->getLovedTracks('limit='.$this->loved_count) as $track)
+		{
+			@$loved_tracks .= $this->mustache->render(LASTFM_LOVEDTRACK_STYLE, [
+				'track_name' => $track['name'],
+				'track_artist' => $track['artist'],
+				'small_artwork' => '<img style="width: 34px; height: 34px;" src="'.$track['artwork'].'">',
+				'medium_artwork' => '<img style="width: 64px; height: 64px;" src="'.$track['artwork'].'">',
+				'large_artwork' => '<img style="width: 174px; height: 174px;" src="'.$track['artwork'].'">',
+				'extralarge_artwork' => '<img style="width: 300px; height: 300px;" src="'.$track['artwork'].'">',
+			]);
 		}
 		
-		$randomArtwork = $artworks[rand(0, count($artworks) - 1)];
+		$randomArtwork = $recent_artworks[rand(0, count($recent_artworks) - 1)];
 
 		$output = $this->mustache->render(LASTFM_STYLE, [
 			'username' => $this->getInfo()['name'],
+			'realname' => $this->getInfo()['realname'],
 			'playcount' => $this->getInfo()['playcount'],
+			'lovedcount' => $this->retrieve('user.getLovedTracks&user='.$this->user)->lovedtracks['total'],
 			'recent_tracks' => $recent_tracks,
+			'loved_tracks' => $loved_tracks,
 			'random_small_artwork' => '<img style="width: 34px; height: 34px;" src="'.$randomArtwork.'">',
 			'random_medium_artwork' => '<img style="width: 64px; height: 64px;" src="'.$randomArtwork.'">',
 			'random_large_artwork' => '<img style="width: 174px; height: 174px;" src="'.$randomArtwork.'">',
@@ -74,8 +93,9 @@ class Lastfm extends Tumult
 
 		$output = array(
 			'name' => $user->name,
+			'realname' => $user->realname,
 			'url' => $user->url,
-			'image' => $user->image,
+			'image' => $user->image[3],
 			'country' => $user->country,
 			'age' => $user->age,
 			'gender' => $user->gender,
@@ -146,19 +166,13 @@ class Lastfm extends Tumult
 		{
 			$output[] = array(
 				'mbid' => $track->mbid,
-				'artist' => array(
-					'name' => $track->artist['name'],
-					'mbid' => $track->artist['mbid'],
-					'url' => $track->artist['url'],
-				),
+				'artist' => $track->artist->name,
+				'artist_url' => $track->artist->url,
+				'artist_mbid' => $track->artist->mbid,
+				'artwork' => $track->image[3],
 				'name' => $track->name,
 				'url' => $track->url,
 				'date' => $track->date['uts'],
-				'image' => array(
-					'small' => $artist->image['small'],
-					'medium' => $artist->image['medium'],
-					'large' => $artist->image['large'],
-				),
 			);
 		}
 
@@ -176,25 +190,16 @@ class Lastfm extends Tumult
 			foreach($artistTracks as $track)
 			{
 				$output[] = array(
-					'artist' => array(
-						'mbid' => $track->artist['mbid'],
-						'name' => $track->artist,
-						'url' => 'http://www.last.fm/music/'.urlencode($track->artist),
-					),
+					'artist' => $track->artist->name,
+					'artist_mbid' => $track->artist->mbid,
+					'artist_url' => 'http://www.last.fm/music/'.urlencode($track->artist),
 					'name' => $track->name,
 					'streamable' => $track->streamable,
 					'mbid' => $track->mbid,
-					'album' => array(
-						'mbid' => $track->album['mbid'],
-						'name' => $track->album,
-					),
+					'album_name' => $track->album,
+					'album_mbid' => $track->album['mbid'],
 					'url' => $track->url,
-					'image' => array(
-						'small' => $track->image['small'],
-						'medium' => $track->image['medium'],
-						'large' => $track->image['large'],
-						'extralarge' => $track->image['extralarge'],
-					),
+					'artwork' => $track->image[3],
 					'date' => $track->date['uts'],
 				);
 			}
@@ -220,17 +225,10 @@ class Lastfm extends Tumult
 				'mbid' => $track->mbid,
 				'url' => $track->url,
 				'date' => $track->date['uts'],
-				'artist' => array(
-					'name' => $track->artist['name'],
-					'mbid' => $track->artist['mbid'],
-					'url' => $track->artist['url'],
-				),
-				'image' => array(
-					'small' => $track->image['small'],
-					'medium' => $track->image['medium'],
-					'large' => $track->image['large'],
-					'extralarge' => $track->image['extralarge'],
-				),
+				'artist' => $track->artist->name,
+				'artist_mbid' => $track->artist->mbid,
+				'artist_url' => 'http://www.last.fm/music/'.urlencode($track->artist),
+				'artwork' => $track->image[3],
 				'streamable' => $track->streamable['fulltrack'],
 			);
 		}
@@ -252,11 +250,7 @@ class Lastfm extends Tumult
 				'mbid' => $artist->mbid,
 				'url' => $artist->url,
 				'streamable' => $artist->streamable,
-				'image' => array(
-					'small' => $artist->image['small'],
-					'medium' => $artist->image['medium'],
-					'large' => $artist->image['large'],
-				),
+				'artwork' => $track->image[3],
 			);
 		}
 
@@ -276,16 +270,10 @@ class Lastfm extends Tumult
 				'playcount' => $track->playcount,
 				'mbid' => $track->mbid,
 				'url' => $track->url,
-				'artist' => array(
-					'name' => $track->artist['name'],
-					'mbid' => $track->artist['mbid'],
-					'url' => $track->artist['url'],
-				),
-				'image' => array(
-					'small' => $track->image['small'],
-					'medium' => $track->image['medium'],
-					'large' => $track->image['large'],
-				),
+				'artist' => $track->artist->name,
+				'artist_mbid' => $track->artist->mbid,
+				'artist_url' => 'http://www.last.fm/music/'.urlencode($track->artist),
+				'artwork' => $track->image[3],
 			);
 		}
 
@@ -305,16 +293,10 @@ class Lastfm extends Tumult
 				'playcount' => $album->playcount,
 				'mbid' => $album->mbid,
 				'url' => $album->url,
-				'artist' => array(
-					'name' => $album->artist['name'],
-					'mbid' => $album->artist['mbid'],
-					'url' => $album->artist['url'],
-				),
-				'image' => array(
-					'small' => $album->image['small'],
-					'medium' => $album->image['medium'],
-					'large' => $album->image['large'],
-				),
+				'artist' => $track->artist->name,
+				'artist_mbid' => $track->artist->mbid,
+				'artist_url' => 'http://www.last.fm/music/'.urlencode($track->artist),
+				'artwork' => $track->image[3],
 			);
 		}
 

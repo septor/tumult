@@ -51,9 +51,18 @@ define('LASTFM_STYLE', '
 				{{recent_tracks}}
 			</ul>
 		</p>
+		<p>
+			{{lovedcount}} songs have been loved, here\'s the top:<br>
+			<ul>
+				{{loved_tracks}}
+			</ul>
 	</div>
 ');
 
 define('LASTFM_RECENTTRACK_STYLE', '
+	<li>{{small_artwork}} {{track_name}} by {{track_artist}}</li>
+');
+
+define('LASTFM_LOVEDTRACK_STYLE', '
 	<li>{{small_artwork}} {{track_name}} by {{track_artist}}</li>
 ');

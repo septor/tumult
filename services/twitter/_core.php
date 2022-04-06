@@ -19,11 +19,11 @@ class Twitter
 
 		if($this->sd->hasConfig('twitter'))
 		{
-			$this->tweets = TWITTER_TWEETS;
-			$this->replies = TWITTER_REPLIES;
-			$this->retweets = TWITTER_RETWEETS;
-			$this->cache = TWITTER_CACHE * 60;
-			$this->dateformat = TWITTER_DATEFORMAT;
+			$this->tweets = (defined(TWITTER_TWEETS) ? TWITTER_TWEETS : 1);
+			$this->replies = (defined(TWITTER_REPLIES) ? TWITTER_REPLIES : true);
+			$this->retweets = (defined(TWITTER_RETWEETS) ? TWITTER_RETWEETS : false);
+			$this->cache = (defined(TWITTER_CACHE) ? TWITTER_CACHE * 60 : 3600);
+			$this->dateformat = (defined(TWITTER_DATEFORMAT) ? TWITTER_DATEFORMAT : 'F jS, Y - g:i A');
 		}
 		else
 		{

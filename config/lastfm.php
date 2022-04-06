@@ -5,4 +5,4 @@
  */
 
  // This is included to show you how to override core settings.
-define('LASTFM_TRACKCOUNT', 10);
+define('LASTFM_RECENTTRACKCOUNT', 10);
