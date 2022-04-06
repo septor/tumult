@@ -60,22 +60,28 @@ class Posts extends Tumult
 			$data = json_decode($data);
 		}
 			
-		foreach(glob(TUMULT_POSTLOCATION.'/*.{markdown,mdown,mkdn,mkd,md}', GLOB_BRACE) as $post)
+		if($data)
 		{
-			if($loc == 'local')
-				$newPost = $this->process($post);
-			else
-				$newPost = $this->process($post->download_url);
+			foreach($data as $post)
+			{
+				if($loc == 'local')
+					$newPost = $this->process($post);
+				else
+					$newPost = $this->process($post->download_url);
 
-			@$posts .= $this->mustache->render(POST_STYLE, [
-				'title' => $newPost['title'],
-				'description' => $newPost['description'],
-				'content' => $newPost['content'],
-				'created' => date(TUMULT_POST_DATEFORMAT, strtotime($newPost['created'])),
-				'updated' => date(TUMULT_POST_DATEFORMAT, $newPost['updated']['mtime']),
-			]);
+				@$posts .= $this->mustache->render(POST_STYLE, [
+					'title' => $newPost['title'],
+					'description' => $newPost['description'],
+					'content' => $newPost['content'],
+					'created' => date(TUMULT_POST_DATEFORMAT, strtotime($newPost['created'])),
+					'updated' => date(TUMULT_POST_DATEFORMAT, $newPost['updated']['mtime']),
+				]);
+			}
+			return $posts;
 		}
-
-		return $posts;
+		else
+		{
+			return "";
+		}
 	}
 }
