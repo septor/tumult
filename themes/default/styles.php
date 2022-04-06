@@ -5,10 +5,12 @@
  */
 define('POST_STYLE', '
 	<div class="block">
+		<h2>{{title}}</h2>
+		<h6>{{description}}</h6>
 		{{content}}
 		<br><br>
-		created on: {{created}}<br>
-		last modified: {{updated}}
+		Created on: {{created}}<br>
+		Modified: {{updated}}
 	</div>
 ');
 
