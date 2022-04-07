@@ -20,9 +20,9 @@ class Tumult
 			$this->theme = 'default';
 
 		$this->template = file_get_contents('themes/'.$this->theme.'/template.html');
-		$this->bp = new Posts();
-		$this->sd = new Statics();
-		$this->sp = new Services();
+		$this->posts = new Posts();
+		$this->statics = new Statics();
+		$this->services = new Services();
 	}
 
 	function curlFetch($url)
@@ -39,8 +39,9 @@ class Tumult
 
 	function loadContent()
 	{
-		$posts = $this->bp->fetchPosts((TUMULT_POSTLOCATION == '_posts' ? 'local' : 'remote'));
+		$posts = $this->posts->fetchPosts((TUMULT_POSTLOCATION == '_posts' ? 'local' : 'remote'));
 		$services = glob('services/*', GLOB_ONLYDIR);
+		$servicesArray = [];
 
 		if(count($services) > 0)
 		{
@@ -49,7 +50,8 @@ class Tumult
 				$service = str_replace('services/', '', $service);
 				if(in_array($service, TUMULT_SERVICES))
 				{
-					@$loadServices .= $this->sp->loadService($service);
+					@$loadServices .= $this->services->loadService($service);
+					$servicesArray[$service.'_service'] = $this->services->loadService($service);
 				}
 			}
 		}
@@ -58,14 +60,21 @@ class Tumult
 			$loadServices = '';
 		}
 
-		$output = $this->mustache->render($this->template, [
+		$render = [
 			'sitename' => TUMULT_SITENAME,
 			'blog_column' => $posts,
 			'services_column' => $loadServices,
-			'statics_column' => $this->sd->fetch(TUMULT_STATICS_SORT),
+			'statics_column' => $this->statics->fetch(TUMULT_STATICS_SORT),
 			'copyright' => 'Copyright '.date('Y').' '.TUMULT_SITEOWNER,
 			'poweredby' => 'Powered by <a href="https://github.com/septor/tumult">Tumult</a>',
-		]);
+		];
+
+		foreach($servicesArray as $service => $content)
+		{
+			$render[$service] = $content;
+		}
+
+		$output = $this->mustache->render($this->template, $render);
 
 		return $output;
 	}
