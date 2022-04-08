@@ -91,7 +91,7 @@ class Lastfm extends Tumult
 		$data = $this->retrieve('user.getInfo&user='.$this->user);
 		$user = $data->user;
 
-		$output = array(
+		$output = [
 			'name' => $user->name,
 			'realname' => $user->realname,
 			'url' => $user->url,
@@ -103,7 +103,7 @@ class Lastfm extends Tumult
 			'playcount' => $user->playcount,
 			'playlists' => $user->playlists,
 			'registered' => $user->registered['unixtime'],
-		);
+		];
 
 		return $output;
 	}
@@ -119,11 +119,11 @@ class Lastfm extends Tumult
 
 			foreach($shouts as $shout)
 			{
-				$output[] = array(
+				$output[] = [
 					'author' => $shout->author,
 					'body' => $shout->body,
 					'date' => strtotime($shout->date),
-				);
+				];
 			}
 		}
 		elseif($type == 'count')
@@ -142,7 +142,7 @@ class Lastfm extends Tumult
 
 		foreach($tracks as $track)
 		{
-			$output[] = array(
+			$output[] = [
 				'artist' => $track->artist,
 				'name' => $track->name,
 				'album' => $track->album,
@@ -150,7 +150,7 @@ class Lastfm extends Tumult
 				'artwork' => $track->image[3],
 				'date' => $track->date['uts'],
 				'streamable' => $track->streamable,
-			);
+			];
 		}
 
 		return $output;
@@ -164,7 +164,7 @@ class Lastfm extends Tumult
 
 		foreach($tracks as $track)
 		{
-			$output[] = array(
+			$output[] = [
 				'mbid' => $track->mbid,
 				'artist' => $track->artist->name,
 				'artist_url' => $track->artist->url,
@@ -173,7 +173,7 @@ class Lastfm extends Tumult
 				'name' => $track->name,
 				'url' => $track->url,
 				'date' => $track->date['uts'],
-			);
+			];
 		}
 
 		return $output;
@@ -189,7 +189,7 @@ class Lastfm extends Tumult
 
 			foreach($artistTracks as $track)
 			{
-				$output[] = array(
+				$output[] = [
 					'artist' => $track->artist->name,
 					'artist_mbid' => $track->artist->mbid,
 					'artist_url' => 'http://www.last.fm/music/'.urlencode($track->artist),
@@ -201,7 +201,7 @@ class Lastfm extends Tumult
 					'url' => $track->url,
 					'artwork' => $track->image[3],
 					'date' => $track->date['uts'],
-				);
+				];
 			}
 		}
 		else
@@ -220,7 +220,7 @@ class Lastfm extends Tumult
 
 		foreach($bannedTracks as $track)
 		{
-			$output[] = array(
+			$output[] = [
 				'name' => $track->name,
 				'mbid' => $track->mbid,
 				'url' => $track->url,
@@ -230,7 +230,7 @@ class Lastfm extends Tumult
 				'artist_url' => 'http://www.last.fm/music/'.urlencode($track->artist),
 				'artwork' => $track->image[3],
 				'streamable' => $track->streamable['fulltrack'],
-			);
+			];
 		}
 
 		return $output;
@@ -244,14 +244,14 @@ class Lastfm extends Tumult
 
 		foreach($topArtists as $artist)
 		{
-			$output[$artist['rank']] = array(
+			$output[$artist['rank']] = [
 				'name' => $artist->name,
 				'playcount' => $artist->playcount,
 				'mbid' => $artist->mbid,
 				'url' => $artist->url,
 				'streamable' => $artist->streamable,
 				'artwork' => $track->image[3],
-			);
+			];
 		}
 
 		return $output;
@@ -265,7 +265,7 @@ class Lastfm extends Tumult
 
 		foreach($topTracks as $track)
 		{
-			$output[$track['rank']] = array(
+			$output[$track['rank']] = [
 				'name' => $track->name,
 				'playcount' => $track->playcount,
 				'mbid' => $track->mbid,
@@ -274,7 +274,7 @@ class Lastfm extends Tumult
 				'artist_mbid' => $track->artist->mbid,
 				'artist_url' => 'http://www.last.fm/music/'.urlencode($track->artist),
 				'artwork' => $track->image[3],
-			);
+			];
 		}
 
 		return $output;
@@ -288,7 +288,7 @@ class Lastfm extends Tumult
 
 		foreach($topAlbums as $album)
 		{
-			$output[$album['rank']] = array(
+			$output[$album['rank']] = [
 				'name' => $album->name,
 				'playcount' => $album->playcount,
 				'mbid' => $album->mbid,
@@ -297,7 +297,7 @@ class Lastfm extends Tumult
 				'artist_mbid' => $track->artist->mbid,
 				'artist_url' => 'http://www.last.fm/music/'.urlencode($track->artist),
 				'artwork' => $track->image[3],
-			);
+			];
 		}
 
 		return $output;
@@ -311,11 +311,11 @@ class Lastfm extends Tumult
 
 		foreach($topTags as $tag)
 		{
-			$output[] = array(
+			$output[] = [
 				'name' => $tag->name,
 				'count' => $tag->count,
 				'url' => $tag->url,
-			);
+			];
 		}
 
 		return $output;
