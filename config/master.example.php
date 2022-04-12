@@ -12,6 +12,7 @@ define('TUMULT_SITEOWNER', 'septor');
 const TUMULT_SOCIALDRINKS = [
 	'twitter' => 'septor',
 	'lastfm' => 'septor',
+	'steam' => '76561197981854963',
 ];
 
 // Decide which services should be loaded.
