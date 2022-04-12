@@ -212,30 +212,6 @@ class Lastfm extends Tumult
 		return $output;
 	}
 
-	function getBannedTracks($options='')
-	{
-		$options = (empty($options) ? '' : '&'.$options);
-		$data = $this->retrieve('user.getBannedTracks&user='.$this->user);
-		$bannedTracks = $data->bannedtracks->track;
-
-		foreach($bannedTracks as $track)
-		{
-			$output[] = [
-				'name' => $track->name,
-				'mbid' => $track->mbid,
-				'url' => $track->url,
-				'date' => $track->date['uts'],
-				'artist' => $track->artist->name,
-				'artist_mbid' => $track->artist->mbid,
-				'artist_url' => 'http://www.last.fm/music/'.urlencode($track->artist),
-				'artwork' => $track->image[3],
-				'streamable' => $track->streamable['fulltrack'],
-			];
-		}
-
-		return $output;
-	}
-
 	function getTopArtists($options='')
 	{
 		$options = (empty($options) ? '' : '&'.$options);
@@ -315,6 +291,27 @@ class Lastfm extends Tumult
 				'name' => $tag->name,
 				'count' => $tag->count,
 				'url' => $tag->url,
+			];
+		}
+
+		return $output;
+	}
+
+	function getLibraryArtists($options='')
+	{
+		$options = (empty($options_) ? '' : '&'.$options);
+		$data = $this->retrieve('library.getArtists&user='.$this->user);
+		$getArtists = $data->artists->artist;
+
+		foreach($getArtists as $artist)
+		{
+			$output[] = [
+				'name' => $artist->name,
+				'playcount' => $artist->playcount,
+				'tagcount' => $artist->tagcount,
+				'mbid' => $artist->mbid,
+				'url' => $artist->url,
+				'artwork' => $artist->image[3],
 			];
 		}
 
