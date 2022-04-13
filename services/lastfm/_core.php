@@ -7,21 +7,22 @@ class Lastfm extends Tumult
 {
 	function __construct()
 	{
-		$this->sd = new Services();
+		$this->services = new Services();
 		$this->key = LASTFM_APIKEY;
 		$this->user = TUMULT_SOCIALDRINKS['lastfm'];
+		$this->cache = (defined(TUMULT_CACHETIME) ? TUMULT_CACHETIME * 60 : 3600);
 
-		$default_count = 5;
+		$defaultCount = 5;
 
-		if($this->sd->hasConfig('lastfm'))
+		if($this->services->hasConfig('lastfm'))
 		{
-			$this->recent_count = (defined(LASTFM_RECENTTRACKCOUNT) ? LASTFM_RECENTTRACKCOUNT : $default_count);
-			$this->loved_count = (defined(LASTFM_LOVEDTRACKCOUNT) ? LASTFM_LOVEDTRACKCOUNT : $default_count);
+			$this->recent_count = (defined(LASTFM_RECENTTRACKCOUNT) ? LASTFM_RECENTTRACKCOUNT : $defaultCount);
+			$this->loved_count = (defined(LASTFM_LOVEDTRACKCOUNT) ? LASTFM_LOVEDTRACKCOUNT : $defaultCount);
 		}
 		else
 		{
-			$this->recent_count = $default_count;
-			$this->loved_count = $default_count;
+			$this->recent_count = $defaultCount;
+			$this->loved_count = $defaultCount;
 		}
 
 		$this->mustache = new Mustache_Engine([
@@ -32,10 +33,20 @@ class Lastfm extends Tumult
 		]);
 	}
 
-	function retrieve($data)
+	function fetchData($data)
 	{
-		$result = parent::curlFetch('http://ws.audioscrobbler.com/2.0/?method='.$data.'&api_key='.$this->key);
-		return simplexml_load_string($result);
+		return parent::curlFetch('http://ws.audioscrobbler.com/2.0/?method='.$data.'&api_key='.$this->key);
+	}
+
+	function retrieve($call, $filename)
+	{
+		if(!(file_exists('cache/'.$filename)) || time() - filemtime('cache/'.$filename) > $this->cache)
+		{
+			$response = $this->fetchData($call);
+			file_put_contents('cache/'.$filename, $response);
+		}
+
+		return simplexml_load_string(file_get_contents('cache/'.$filename));
 	}
 
 	function display()
@@ -74,7 +85,7 @@ class Lastfm extends Tumult
 			'username' => $this->getInfo()['name'],
 			'realname' => $this->getInfo()['realname'],
 			'playcount' => $this->getInfo()['playcount'],
-			'lovedcount' => $this->retrieve('user.getLovedTracks&user='.$this->user)->lovedtracks['total'],
+			'lovedcount' => $this->retrieve('user.getLovedTracks&user='.$this->user, 'lastfm_lovedtracks.xml')->lovedtracks['total'],
 			'recent_tracks' => $recent_tracks,
 			'loved_tracks' => $loved_tracks,
 			'random_small_artwork' => '<img style="width: 34px; height: 34px;" src="'.$randomArtwork.'">',
@@ -88,7 +99,7 @@ class Lastfm extends Tumult
 
 	function getInfo()
 	{
-		$data = $this->retrieve('user.getInfo&user='.$this->user);
+		$data = $this->retrieve('user.getInfo&user='.$this->user, 'lastfm_userinfo.xml');
 		$user = $data->user;
 
 		$output = [
@@ -111,7 +122,7 @@ class Lastfm extends Tumult
 	function getShouts($type='shouts', $options='')
 	{
 		$options = (empty($options) ? '' : '&'.$options);
-		$data = $this->retrieve('user.getShouts&user='.$this->user.$options);
+		$data = $this->retrieve('user.getShouts&user='.$this->user.$options, 'lastfm_shouts.xml');
 
 		if($type == 'shouts')
 		{
@@ -137,7 +148,7 @@ class Lastfm extends Tumult
 	function getRecentTracks($options='')
 	{
 		$options = (empty($options) ? '' : '&'.$options);
-		$data = $this->retrieve('user.getRecentTracks&user='.$this->user.$options);
+		$data = $this->retrieve('user.getRecentTracks&user='.$this->user.$options, 'lastfm_recenttracks.xml');
 		$tracks = $data->recenttracks->track;
 
 		foreach($tracks as $track)
@@ -159,7 +170,7 @@ class Lastfm extends Tumult
 	function getLovedTracks($options='')
 	{
 		$options = (empty($options) ? '' : '&'.$options);
-		$data = $this->retrieve('user.getLovedTracks&user='.$this->user.$options);
+		$data = $this->retrieve('user.getLovedTracks&user='.$this->user.$options, 'lastfm_lovedtracks.xml');
 		$tracks = $data->lovedtracks->track;
 
 		foreach($tracks as $track)
@@ -184,7 +195,8 @@ class Lastfm extends Tumult
 		$options = (empty($options) ? '' : '&'.$options);
 		if(!empty($artist))
 		{
-			$data = $this->retrieve('user.getArtistTracks&user='.$this->user.'&artist='.$artist);
+			$fileArtist = str_replace(' ', '', strtolower($artist));
+			$data = $this->retrieve('user.getArtistTracks&user='.$this->user.$options.'&artist='.$artist, 'lastfm_artisttracks_'.$fileArtist.'.xml');
 			$artistTracks = $data->artisttracks->track;
 
 			foreach($artistTracks as $track)
@@ -215,7 +227,7 @@ class Lastfm extends Tumult
 	function getTopArtists($options='')
 	{
 		$options = (empty($options) ? '' : '&'.$options);
-		$data = $this->retrieve('user.getTopArtists&user='.$this->user);
+		$data = $this->retrieve('user.getTopArtists&user='.$this->user.$options, 'lastfm_topartists.xml');
 		$topArtists = $data->topartists->artist;
 
 		foreach($topArtists as $artist)
@@ -236,7 +248,7 @@ class Lastfm extends Tumult
 	function getTopTracks($options='')
 	{
 		$options = (empty($options_) ? '' : '&'.$options);
-		$data = $this->retrieve('user.getTopTracks&user='.$this->user);
+		$data = $this->retrieve('user.getTopTracks&user='.$this->user.$options, 'lastfm_toptracks.xml');
 		$topTracks = $data->toptracks->track;
 
 		foreach($topTracks as $track)
@@ -259,7 +271,7 @@ class Lastfm extends Tumult
 	function getTopAlbums($options='')
 	{
 		$options = (empty($options_) ? '' : '&'.$options);
-		$data = $this->retrieve('user.getTopAlbums&user='.$this->user);
+		$data = $this->retrieve('user.getTopAlbums&user='.$this->user.$options, 'lastfm_topalbums.xml');
 		$topAlbums = $data->topalbums->album;
 
 		foreach($topAlbums as $album)
@@ -282,7 +294,8 @@ class Lastfm extends Tumult
 	function getTopTags($options='')
 	{
 		$options = (empty($options_) ? '' : '&'.$options);
-		$data = $this->retrieve('user.getTopTags&user='.$this->user);
+		$data = $this->retrieve('user.getTopTags&user='.$this->user.$options, 'lastfm_toptags.xml');
+		$data = $this->fetchData('user.getTopTags&user='.$this->user);
 		$topTags = $data->toptags->tag;
 
 		foreach($topTags as $tag)
@@ -300,7 +313,7 @@ class Lastfm extends Tumult
 	function getLibraryArtists($options='')
 	{
 		$options = (empty($options_) ? '' : '&'.$options);
-		$data = $this->retrieve('library.getArtists&user='.$this->user);
+		$data = $this->retrieve('library.getArtists&user='.$this->user.$options, 'lastfm_libraryartists.xml');
 		$getArtists = $data->artists->artist;
 
 		foreach($getArtists as $artist)

@@ -27,6 +27,9 @@ const TUMULT_SERVICES = [
 // Defaults to 'default' if your theme isn't found or this isn't configured.
 define('TUMULT_THEME', 'default');
 
+// Default cache time, in minutes.
+define('TUMULT_CACHETIME', 60);
+
 // Sort type for static pages. Sorted by filename.
 // 'asc'	= A, B, C, D, E
 // 'desc'	= E, D, C, B, A

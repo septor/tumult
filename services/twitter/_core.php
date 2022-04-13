@@ -9,7 +9,7 @@ class Twitter
 {
 	function __construct()
 	{
-		$this->sd = new Services();
+		$this->services = new Services();
 		$this->settings = [
 			'oauth_access_token' => TWITTER_ACCESS_TOKEN,
 			'oauth_access_token_secret' => TWITTER_ACCESS_SECRET,
@@ -17,12 +17,14 @@ class Twitter
 			'consumer_secret' => TWITTER_CONSUMER_SECRET,
 		];
 
-		if($this->sd->hasConfig('twitter'))
+		$defaultCache = (defined(TUMULT_CACHETIME) ? TUMULT_CACHETIME * 60 : 3600);
+
+		if($this->services->hasConfig('twitter'))
 		{
 			$this->tweets = (defined(TWITTER_TWEETS) ? TWITTER_TWEETS : 1);
 			$this->replies = (defined(TWITTER_REPLIES) ? TWITTER_REPLIES : true);
 			$this->retweets = (defined(TWITTER_RETWEETS) ? TWITTER_RETWEETS : false);
-			$this->cache = (defined(TWITTER_CACHE) ? TWITTER_CACHE * 60 : 3600);
+			$this->cache = (defined(TWITTER_CACHE) ? TWITTER_CACHE * 60 : $defaultCache);
 			$this->dateformat = (defined(TWITTER_DATEFORMAT) ? TWITTER_DATEFORMAT : 'F jS, Y - g:i A');
 		}
 		else
@@ -30,7 +32,7 @@ class Twitter
 			$this->tweets = 1;
 			$this->replies = true;
 			$this->retweets = false;
-			$this->cache = 3600;
+			$this->cache = $defaultCache;
 			$this->dateformat = 'F jS, Y - g:i A';
 		}
 

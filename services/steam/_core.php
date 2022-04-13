@@ -7,11 +7,12 @@ class Steam extends Tumult
 {
 	function __construct()
 	{
-        $this->sd = new Services();
+        $this->services = new Services();
 		$this->key = STEAM_APIKEY;
 		$this->user = TUMULT_SOCIALDRINKS['steam'];
+        $this->cache = (defined(TUMULT_CACHETIME) ? TUMULT_CACHETIME * 60 : 3600);
 
-        if($this->sd->hasConfig('steam'))
+        if($this->services->hasConfig('steam'))
 		{
 			$this->dateformat = (defined(STEAM_DATEFORMAT) ? STEAM_DATEFORMAT : 'F jS, Y');
 		}
@@ -28,7 +29,7 @@ class Steam extends Tumult
 		]);
 	}
 
-    function retrieve($data)
+    function fetchData($data)
 	{
         if($data == "GetPlayerSummaries")
         {
@@ -59,8 +60,19 @@ class Steam extends Tumult
         {
             die('Set a datapoint. [steam_service]');
         }
-		$result = parent::curlFetch('http://api.steampowered.com/'.$urlModifier.'/?key='.$this->key.'&'.$idModifier.'&format=json');
-		return json_decode($result, true);
+
+		return parent::curlFetch('http://api.steampowered.com/'.$urlModifier.'/?key='.$this->key.'&'.$idModifier.'&format=json');
+	}
+
+	function retrieve($call, $filename)
+	{
+		if(!(file_exists('cache/'.$filename)) || time() - filemtime('cache/'.$filename) > $this->cache)
+		{
+			$response = $this->fetchData($call);
+			file_put_contents('cache/'.$filename, $response);
+		}
+
+		return json_decode(file_get_contents('cache/'.$filename), true);
 	}
 
     function display()
@@ -93,7 +105,7 @@ class Steam extends Tumult
 
     function getInfo()
     {
-        $data = $this->retrieve('GetPlayerSummaries');
+        $data = $this->retrieve('GetPlayerSummaries', 'steam_userinfo.json');
         $user = $data['response']['players'][0];
 
         $output = [
@@ -113,7 +125,7 @@ class Steam extends Tumult
 
     function getRecentlyPlayed()
     {
-        $data = $this->retrieve('GetRecentlyPlayedGames');
+        $data = $this->retrieve('GetRecentlyPlayedGames', 'steam_recentplays.json');
         $games = $data['response']['games'];
 
 		foreach($games as $game)
