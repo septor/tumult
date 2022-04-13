@@ -76,7 +76,7 @@ class Twitter
 	{
 		$sid = array();
 		$data = $this->gatherTweets();
-		$user = '<a href="http://twitter.com/'.$this->username.'">'.$this->username.'</a>';
+		$user = $this->username;
 
 		if($this->replies)
 		{
@@ -102,6 +102,7 @@ class Twitter
 				$tweetDate = new DateTime($data[$id]->created_at);
 				$content = [
 					'username' => $user,
+					'url' => 'https://twitter.com/'.$user,
 					'datestamp' => $tweetDate->format($this->dateformat),
 					'status' => $this->parseTweet($data[$id]->text),
 					'retweet' => '<a href="javascript:;" onClick="window.open(\'https://twitter.com/intent/retweet?tweet_id='.$data[$id]->id.'\',\'retweet\',\'scrollbars=yes,width=600,height=375\');">Retweet</a>',
