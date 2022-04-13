@@ -19,7 +19,8 @@ const TUMULT_SOCIALDRINKS = [
 // To inactivate a service, simply remove it from the array. Or comment it out if you're a barbarian.
 const TUMULT_SERVICES = [
 	'twitter',
-	'lastfm'
+	'lastfm',
+	'steam'
 ];
 
 // Theme you wish to use.

@@ -52,3 +52,41 @@ class Steam extends Tumult
 		$result = parent::curlFetch('http://api.steampowered.com/'.$urlModifier.'/?key='.$this->key.'&'.$idModifier.'&format=json');
 		return json_decode($result, true);
 	}
+
+    function display()
+    {
+        foreach($this->getRecentlyPlayed() as $game)
+		{
+			@$recent_plays .= $this->mustache->render(STEAM_RECENTPLAYS_STYLE, [
+				'name' => $game['name'],
+				'gameicon' => $game['gameicon'],
+				'forever' => $game['forever'],
+				'twoweeks' => $game['twoweeks'],
+			]);
+		}
+
+        $output = $this->mustache->render(STEAM_STYLE, [
+			'recent_plays' => $recent_plays,
+		]);
+
+		return $output;
+    }
+
+    function getRecentlyPlayed()
+    {
+        $data = $this->retrieve('GetRecentlyPlayedGames');
+        $games = $data['response']['games'];
+
+		foreach($games as $game)
+		{
+			$output[] = [
+				'gameicon' => '<img src="http://media.steampowered.com/steamcommunity/public/images/apps/'.$game['appid'].'/'.$game['img_icon_url'].'.jpg" />',
+                'name' => $game['name'],
+                'forever' => round($game['playtime_forever'] / 60),
+                'twoweeks' => round($game['playtime_2weeks'] / 60),
+			];
+		}
+
+		return $output;
+    }
+}

@@ -30,6 +30,10 @@ class Services
 				$load = new Lastfm();
 				return $load->display();
 				break;
+			case 'steam':
+				$load = new Steam();
+				return $load->display();
+				break;
 		}
 	}
 }

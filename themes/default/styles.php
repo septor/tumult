@@ -20,6 +20,21 @@ define('STATIC_STYLE', '
 	</div>
 ');
 
+define('STEAM_STYLE', '
+	<div class="block">
+		<h2>Steam</h2>
+		<p>
+			<ul>
+				{{recent_plays}}
+			</ul>
+		</p>
+	</div>
+');
+
+define('STEAM_RECENTPLAYS_STYLE', '
+	<li>{{gameicon}} {{name}} played {{forever}} hours total ({{twoweeks}} hours last two weeks)</li>
+');
+
 define('TWITTER_STYLE', '
 	<div class="block">
 		<h2>Twitter</h2>
