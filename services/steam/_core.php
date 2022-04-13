@@ -7,8 +7,18 @@ class Steam extends Tumult
 {
 	function __construct()
 	{
+        $this->sd = new Services();
 		$this->key = STEAM_APIKEY;
 		$this->user = TUMULT_SOCIALDRINKS['steam'];
+
+        if($this->sd->hasConfig('steam'))
+		{
+			$this->dateformat = (defined(STEAM_DATEFORMAT) ? STEAM_DATEFORMAT : 'F jS, Y');
+		}
+		else
+		{
+			$this->dateformat = 'F jS, Y';
+		}
 
 		$this->mustache = new Mustache_Engine([
 			'escape' => function($value)
@@ -66,10 +76,39 @@ class Steam extends Tumult
 		}
 
         $output = $this->mustache->render(STEAM_STYLE, [
+            'realname' => $this->getInfo()['realname'],
+            'displayname' => $this->getInfo()['displayname'],
+            'url' => $this->getInfo()['url'],
+            'laston' => $this->getInfo()['lastlogoff'],
+            'created' => $this->getInfo()['created'],
 			'recent_plays' => $recent_plays,
+            'small_avatar' => '<img style="width: 34px; height: 34px;" src="'.$this->getInfo()['avatar'].'">',
+			'medium_avatar' => '<img style="width: 64px; height: 64px;" src="'.$this->getInfo()['avatar'].'">',
+			'large_avatar' => '<img style="width: 174px; height: 174px;" src="'.$this->getInfo()['avatar'].'">',
+			'extralarge_avatar' => '<img style="width: 300px; height: 300px;" src="'.$this->getInfo()['avatar'].'">',
 		]);
 
 		return $output;
+    }
+
+    function getInfo()
+    {
+        $data = $this->retrieve('GetPlayerSummaries');
+        $user = $data['response']['players'][0];
+
+        $output = [
+            'steamid' => $user['steamid'],
+            'displayname' => $user['personaname'],
+            'url' => $user['profileurl'],
+            'avatar' => $user['avatarfull'],
+            'lastlogoff' => date($this->dateformat, $user['lastlogoff']),
+            'realname' => $user['realname'],
+            'clanid' => $user['primaryclanid'],
+            'created' => date($this->dateformat, $user['timecreated']),
+            'countrycode' => $user['loccountrycode'],
+        ];
+
+        return $output;
     }
 
     function getRecentlyPlayed()

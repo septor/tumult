@@ -3,6 +3,8 @@
  * Tumult; get more information at:  https://github.com/septor/tumult
  * For contributions, copyrights, and more view the `docs` folder.
  */
+
+ // Core Styles
 define('POST_STYLE', '
 	<div class="block">
 		<h2>{{title}}</h2>
@@ -20,10 +22,36 @@ define('STATIC_STYLE', '
 	</div>
 ');
 
+// Services Styles
+define('LASTFM_STYLE', '
+	<div class="block">
+		<h2>Last.fm</h2>
+		<p style="text-align:center;">
+			{{random_large_artwork}}
+		</p>
+		<p>
+			{{username}} has scrobbled {{playcount}} tracks! Here\'s the latest:<br>
+			<ul>
+				{{recent_tracks}}
+			</ul>
+		</p>
+	</div>
+');
+
+define('LASTFM_RECENTTRACK_STYLE', '
+	<li>{{small_artwork}} {{track_name}} by {{track_artist}}</li>
+');
+
 define('STEAM_STYLE', '
 	<div class="block">
 		<h2>Steam</h2>
+		<p style="text-align:center;">
+			<a href="{{url}}">{{large_avatar}}</a>
+		</p>
 		<p>
+			On Steam Since: {{created}}<br>
+			Last Online: {{laston}}<br>
+			{{displayname}}\'s recently played games:<br>
 			<ul>
 				{{recent_plays}}
 			</ul>
@@ -52,32 +80,4 @@ define('TWITTER_TWEET_STYLE', '
 		{{status}}<br><br>
 		{{reply}} - {{retweet}} - {{favorite}}
 	</p>
-');
-
-define('LASTFM_STYLE', '
-	<div class="block">
-		<h2>Last.fm</h2>
-		<p style="text-align:center;">
-			{{random_large_artwork}}
-		</p>
-		<p>
-			{{username}} has scrobbled {{playcount}} tracks! Here\'s the latest:<br>
-			<ul>
-				{{recent_tracks}}
-			</ul>
-		</p>
-		<p>
-			{{lovedcount}} songs have been loved, here\'s the top:<br>
-			<ul>
-				{{loved_tracks}}
-			</ul>
-	</div>
-');
-
-define('LASTFM_RECENTTRACK_STYLE', '
-	<li>{{small_artwork}} {{track_name}} by {{track_artist}}</li>
-');
-
-define('LASTFM_LOVEDTRACK_STYLE', '
-	<li>{{small_artwork}} {{track_name}} by {{track_artist}}</li>
 ');
