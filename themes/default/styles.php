@@ -12,7 +12,7 @@ define('POST_STYLE', '
 		{{content}}
 		<br><br>
 		Created on: {{created}}<br>
-		Modified: {{updated}}
+		Updated on: {{updated}}
 	</div>
 ');
 

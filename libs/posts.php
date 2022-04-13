@@ -5,11 +5,13 @@
  */
 class Posts extends Tumult
 {
-	public $mdp;
+	public $markdown;
 
 	function __construct()
 	{
-		$this->mdp = new Parsedown();
+		$this->markdown = new Parsedown();
+		$this->cache = (defined(TUMULT_CACHETIME) ? TUMULT_CACHETIME * 60 : 3600);
+
 		$this->mustache = new Mustache_Engine([
 			'escape' => function($value)
 			{
@@ -27,7 +29,7 @@ class Posts extends Tumult
 		$filetime = explode('_', str_replace("_posts/", "", $file));
 
 		foreach($content as $line)
-			@$post .= $this->mdp->text($line);
+			@$post .= $this->markdown->text($line);
 
 		$output = [
 			'title' => $this->gatherConfig($configLines[2]),
@@ -50,24 +52,25 @@ class Posts extends Tumult
 
 	function fetchPosts($loc)
 	{
-		if($loc == 'local')
-		{
-			$data = glob(TUMULT_POSTLOCATION.'/*.{markdown,mdown,mkdn,mkd,md}', GLOB_BRACE);
+		if($loc != "local") {
+			$response = json_decode(parent::curlFetch('https://api.github.com/repos/'.TUMULT_POSTLOCATION.'/contents/_posts'), true);
+			foreach($response as $remotePost)
+			{
+				$filename = '_posts/'.$remotePost['name'];
+				if(!(file_exists($filename)) || time() - filemtime($filename) > $this->cache)
+				{
+					file_put_contents($filename, file_get_contents($remotePost['download_url']));
+				}
+			}
 		}
-		else
-		{
-			$data = parent::curlFetch('https://api.github.com/repos/'.TUMULT_POSTLOCATION.'/contents/_posts');
-			$data = json_decode($data);
-		}
+
+		$data = glob('_posts/*.{markdown,mdown,mkdn,mkd,md}', GLOB_BRACE);
 			
 		if($data)
 		{
 			foreach($data as $post)
 			{
-				if($loc == 'local')
-					$newPost = $this->process($post);
-				else
-					$newPost = $this->process($post->download_url);
+				$newPost = $this->process($post);
 
 				@$posts .= $this->mustache->render(POST_STYLE, [
 					'title' => $newPost['title'],
