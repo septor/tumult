@@ -46,15 +46,15 @@ class Twitter
 
 	function gatherTweets()
 	{
-		if(!(file_exists('tweets.json')) || time() - filemtime('tweets.json') > $this->cache)
+		if(!(file_exists('cache/twitter_tweets.json')) || time() - filemtime('cache/twitter_tweets.json') > $this->cache)
 		{
 			$response = $this->twitter->setGetfield('?screen_name='.$this->username.'&include_rts='.$this->retweets)
 				->buildOauth('https://api.twitter.com/1.1/statuses/user_timeline.json', 'GET')
 				->performRequest();
-			file_put_contents('tweets.json', $response);
+			file_put_contents('cache/twitter_tweets.json', $response);
 		}
 
-		$output = json_decode(file_get_contents('tweets.json'));
+		$output = json_decode(file_get_contents('cache/twitter_tweets.json'));
 
 		return $output;
 	}
