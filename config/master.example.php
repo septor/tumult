@@ -38,6 +38,7 @@ define('TUMULT_STATICS_SORT', 'asc');
 // The location of your blog posts.
 // Use `_posts` to use posts stored along side this script.
 // Use `githubusername/reponame` to use a Github repo (see the wiki for more info)
+// Notice, if you create a local post and your post location is NOT local, it will still exist. It just won't be stored remotely.
 define('TUMULT_POSTLOCATION', '_posts');
 
 // Date format to display the date of blog posts.

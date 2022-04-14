@@ -40,7 +40,7 @@ Here are some things that are supported, but not required:
 3. Modify `config/master.example.php` and save it as `config/master.php`
 4. If you are using services, rename `config/keys.example.php` to `config/keys.php` and populate the required data.
 5. Upload everything to your desired location.
-6. Make sure the `cache/` directory is readable and can be written to.
+6. Make sure the `cache/` directory is readable and can be written to (mostly 777, or 0777, however you pronounce it).
 
 That's it! Congratulations!
 
