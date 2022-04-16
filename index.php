@@ -17,9 +17,14 @@ foreach($LOAD['css'] as $cssToLoad)
 	@$css .= '<link rel="stylesheet" href="themes/'.TUMULT_THEME.'/'.$cssToLoad.'">';
 
 echo '<!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="UTF=8">
+		<meta name="description" content="'.TUMULT_META_DESCRIPTION.'">
+        <meta name="keywords" content="'.TUMULT_META_KEYWORDS.'">
+        <meta name="author" content="'.TUMULT_META_AUTHOR.'">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>'.TUMULT_SITENAME.'</title>
 		'.$css.'
 		'.$LOAD['header'].'

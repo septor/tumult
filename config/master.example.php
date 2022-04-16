@@ -8,6 +8,11 @@
 define('TUMULT_SITENAME', 'Tumult');
 define('TUMULT_SITEOWNER', 'septor');
 
+// Meta tags (located in the <head> of the site).
+define('TUMULT_META_AUTHOR', 'Patrick Weaver');
+define('TUMULT_META_KEYWORDS', 'static content,markdown,php,twitter,lastfm,steam');
+define('TUMULT_META_DESCRIPTION', 'A content aggregator utilizing Markdown for static content and PHP to parse in third-party services.');
+
 // Socal Network usernames.
 const TUMULT_SOCIALDRINKS = [
 	'twitter' => 'septor',
