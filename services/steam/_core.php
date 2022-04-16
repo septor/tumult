@@ -10,11 +10,11 @@ class Steam extends Tumult
         $this->services = new Services();
 		$this->key = STEAM_APIKEY;
 		$this->user = TUMULT_SOCIALDRINKS['steam'];
-        $this->cache = (defined(TUMULT_CACHETIME) ? TUMULT_CACHETIME * 60 : 3600);
+        $this->cache = (defined('TUMULT_CACHETIME') ? TUMULT_CACHETIME * 60 : 3600);
 
         if($this->services->hasConfig('steam'))
 		{
-			$this->dateformat = (defined(STEAM_DATEFORMAT) ? STEAM_DATEFORMAT : 'F jS, Y');
+			$this->dateformat = (defined('STEAM_DATEFORMAT') ? STEAM_DATEFORMAT : 'F jS, Y');
 		}
 		else
 		{

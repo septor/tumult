@@ -10,7 +10,7 @@ class Posts extends Tumult
 	function __construct()
 	{
 		$this->markdown = new Parsedown();
-		$this->cache = (defined(TUMULT_CACHETIME) ? TUMULT_CACHETIME * 60 : 3600);
+		$this->cache = (defined('TUMULT_CACHETIME') ? TUMULT_CACHETIME * 60 : 3600);
 
 		$this->mustache = new Mustache_Engine([
 			'escape' => function($value)

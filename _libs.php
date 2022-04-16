@@ -16,8 +16,12 @@ include('config/master.php');
 include('libs/tumult.php');
 
 // Load the theme files.
-include('themes/'.TUMULT_THEME.'/settings.php');
-include('themes/'.TUMULT_THEME.'/styles.php');
+if(defined('TUMULT_THEME'))
+	$theme = (file_exists('themes/'.TUMULT_THEME.'/template.html') ? TUMULT_THEME : 'default');
+else
+	$theme = 'default';
+include('themes/'.$theme.'/settings.php');
+include('themes/'.$theme.'/styles.php');
 
 // Load in the services _core.php files.
 foreach(glob('services/*', GLOB_ONLYDIR) as $service)

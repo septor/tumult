@@ -10,14 +10,14 @@ class Lastfm extends Tumult
 		$this->services = new Services();
 		$this->key = LASTFM_APIKEY;
 		$this->user = TUMULT_SOCIALDRINKS['lastfm'];
-		$this->cache = (defined(TUMULT_CACHETIME) ? TUMULT_CACHETIME * 60 : 3600);
+		$this->cache = (defined('TUMULT_CACHETIME') ? TUMULT_CACHETIME * 60 : 3600);
 
 		$defaultCount = 5;
 
 		if($this->services->hasConfig('lastfm'))
 		{
-			$this->recent_count = (defined(LASTFM_RECENTTRACKCOUNT) ? LASTFM_RECENTTRACKCOUNT : $defaultCount);
-			$this->loved_count = (defined(LASTFM_LOVEDTRACKCOUNT) ? LASTFM_LOVEDTRACKCOUNT : $defaultCount);
+			$this->recent_count = (defined('LASTFM_RECENTTRACKCOUNT') ? LASTFM_RECENTTRACKCOUNT : $defaultCount);
+			$this->loved_count = (defined('LASTFM_LOVEDTRACKCOUNT') ? LASTFM_LOVEDTRACKCOUNT : $defaultCount);
 		}
 		else
 		{

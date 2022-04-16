@@ -15,7 +15,7 @@ class Tumult
 		]);
 
 		if(defined('TUMULT_THEME'))
-			$this->theme = (file_exists('themes/'.TUMULT_THEME) ? TUMULT_THEME : 'default');
+			$this->theme = (file_exists('themes/'.TUMULT_THEME.'/template.html') ? TUMULT_THEME : 'default');
 		else
 			$this->theme = 'default';
 
